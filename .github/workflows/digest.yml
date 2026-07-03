@@ -1,0 +1,32 @@
+name: AI Daily Digest
+
+on:
+  schedule:
+    # 매일 한국시간 08:00 (UTC 23:00 전날) — 시간 바꾸려면 이 cron만 수정
+    - cron: "0 23 * * *"
+  workflow_dispatch: {}   # GitHub 웹/CLI에서 수동 실행용
+
+jobs:
+  send-digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run digest
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_MODEL: claude-sonnet-5
+        run: python digest.py
