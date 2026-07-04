@@ -19,7 +19,11 @@ FEEDS = [
     # 3층: 매일 훑기 + 원천 신호
     ("TLDR AI",       "https://tldr.tech/api/rss/ai"),
     ("Hacker News AI","https://hnrss.org/newest?q=AI&count=30"),
+    # 4층: AI 활용·미디어 트렌드 (이미지·영상 생성, 오픈소스 생태계, 소비자 제품)
+    ("Hugging Face",  "https://huggingface.co/blog/feed.xml"),
+    ("The Verge AI",  "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"),
     # --- 옵션 (원하면 주석 해제) ---
+    # ("TechCrunch AI", "https://techcrunch.com/category/artificial-intelligence/feed/"),
     # ("MarkTechPost",  "https://www.marktechpost.com/feed/"),
     # ("VentureBeat AI","https://venturebeat.com/category/ai/feed/"),
 ]
@@ -42,6 +46,10 @@ INTERESTS_TRENDING = [
     "추론 모델 / test-time compute",
     "음성 AI / 온디바이스 소형 모델",
     "응용 AI 사업·GTM 사례",
+    "이미지·영상 생성 AI (Nano Banana, Midjourney, Sora 등 미디어 생성 툴)",
+    "Hugging Face·오픈소스 모델 생태계",
+    "AI 디자인·크리에이티브 활용 (디자인 툴, 콘텐츠 제작 워크플로우)",
+    "화제가 된 AI 제품·바이럴 활용 사례",
 ]
 
 # 요약에서 낮게 다룰 것

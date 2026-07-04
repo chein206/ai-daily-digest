@@ -105,6 +105,19 @@ def collect_feedback():
 
 
 # ---------------------------------------------------------------- 발송 이력
+def load_covered_terms():
+    """glossary_log.jsonl에서 이미 소개한 용어 목록을 읽는다. (중복 소개 방지)"""
+    f = DATA_DIR / "glossary_log.jsonl"
+    terms = []
+    if f.exists():
+        for line in f.read_text(encoding="utf-8").splitlines():
+            try:
+                terms.append(json.loads(line)["term"])
+            except Exception:
+                continue
+    return terms
+
+
 def load_sent_history(days=7):
     """digest_log.jsonl에서 최근 발송 이력을 읽는다. (링크 중복 제거 + 주제 중복 판단용)"""
     log_file = DATA_DIR / "digest_log.jsonl"
@@ -187,10 +200,10 @@ def _recent_block(recent_titles):
 
 
 # ---------------------------------------------------------------- 2) 랭킹·요약
-def rank_and_summarize(items, recent_titles=None):
-    """Claude에게 후보를 주고 관심 태그 기준 top N을 한글 요약과 함께 받는다."""
+def rank_and_summarize(items, recent_titles=None, covered_terms=None):
+    """Claude에게 후보를 주고 top N 기사 + 오늘의 용어 2개를 받는다."""
     if not items:
-        return []
+        return [], []
 
     client = Anthropic(api_key=ANTHROPIC_API_KEY)
 
@@ -216,18 +229,33 @@ def rank_and_summarize(items, recent_titles=None):
 ## 후보 기사
 {candidates_text}
 
-## 출력 형식 (반드시 이 JSON 배열만, 다른 말 없이)
-[
-  {{
-    "index": 후보번호(정수),
-    "title_ko": "한글로 다듬은 제목",
-    "summary_ko": "2~3문장 한글 요약. 이게 왜 중요한지/무엇이 새로운지 중심으로.",
-    "tag": "이 기사가 걸린 관심사 한 개",
-    "why": "독자에게 왜 볼 가치가 있는지 한 문장"
-  }}
-]
+## 추가 임무: 오늘의 AI 용어 2개
+AI 산업을 공부하는 독자를 위해 실무 AI 용어 2개를 골라 쉽게 설명해라.
+- 가능하면 오늘 선택한 기사에 등장하는 용어를 우선해라 (기사와 연결되면 기억에 남는다)
+- 설명은 비유를 섞어 2~3문장, 전문지식 없이 이해되게
+- 이미 소개한 용어 (다시 고르지 마라): {', '.join(covered_terms) if covered_terms else '(아직 없음)'}
 
-중요도 높은 순으로 정렬해라. 관심사에 걸리는 기사가 {config.MAX_ITEMS}개보다 적으면 그만큼만 선택해라."""
+## 출력 형식 (반드시 이 JSON 객체만, 다른 말 없이)
+{{
+  "articles": [
+    {{
+      "index": 후보번호(정수),
+      "title_ko": "한글로 다듬은 제목",
+      "summary_ko": "2~3문장 한글 요약. 이게 왜 중요한지/무엇이 새로운지 중심으로.",
+      "tag": "이 기사가 걸린 관심사 한 개",
+      "why": "독자에게 왜 볼 가치가 있는지 한 문장"
+    }}
+  ],
+  "glossary": [
+    {{
+      "term": "용어 (영문 원어 병기)",
+      "explanation": "쉬운 한글 설명 2~3문장, 비유 포함",
+      "in_article": "오늘 기사 중 이 용어가 나온 기사 번호, 없으면 null"
+    }}
+  ]
+}}
+
+articles는 중요도 높은 순으로 정렬해라. 관심사에 걸리는 기사가 {config.MAX_ITEMS}개보다 적으면 그만큼만 선택해라. glossary는 정확히 2개."""
 
     log(f"  Claude({MODEL})에게 {len(items)}건 랭킹 요청...")
     resp = client.messages.create(
@@ -249,20 +277,27 @@ def rank_and_summarize(items, recent_titles=None):
             text = text[4:]
     text = text.strip()
     try:
-        selected = json.loads(text)
+        parsed = json.loads(text)
     except Exception as ex:
         log(f"  ! JSON 파싱 실패: {ex}")
         log(text[:500])
-        return []
+        return [], []
+
+    # 구버전(배열) 응답도 허용
+    if isinstance(parsed, list):
+        articles, glossary = parsed, []
+    else:
+        articles = parsed.get("articles", [])
+        glossary = parsed.get("glossary", [])
 
     out = []
-    for s in selected:
+    for s in articles:
         idx = s.get("index")
         if isinstance(idx, int) and 0 <= idx < len(items):
             s["link"] = items[idx]["link"]
             s["source"] = items[idx]["source"]
             out.append(s)
-    return out
+    return out, glossary
 
 
 # ---------------------------------------------------------------- 3) 전송·기록
@@ -332,6 +367,33 @@ def send_digest(selected):
     log(f"  · 텔레그램 전송 완료 ({len(selected)}건 + 헤더)")
 
 
+def send_glossary(glossary):
+    """오늘의 용어 메시지를 보내고 glossary_log.jsonl에 기록한다."""
+    if not glossary:
+        return
+    today = dt.datetime.now().strftime("%Y-%m-%d")
+    lines = ["<b>📚 오늘의 AI 용어</b>", ""]
+    for g in glossary:
+        term = html.escape(str(g.get("term", "")))
+        expl = html.escape(str(g.get("explanation", "")))
+        in_art = g.get("in_article")
+        ref = f"  <i>(오늘 {in_art}번 기사 참고)</i>" if in_art else ""
+        lines.append(f"<b>· {term}</b>{ref}")
+        lines.append(expl)
+        lines.append("")
+        _append_jsonl(DATA_DIR / "glossary_log.jsonl", {
+            "digest_date": today,
+            "term": g.get("term", ""),
+            "explanation": g.get("explanation", ""),
+        })
+    _tg_send({
+        "chat_id": CHAT_ID,
+        "text": "\n".join(lines).strip(),
+        "parse_mode": "HTML",
+    })
+    log(f"  · 용어 {len(glossary)}개 전송·기록")
+
+
 # ---------------------------------------------------------------- main
 def main():
     missing = [k for k, v in {
@@ -347,18 +409,21 @@ def main():
     collect_feedback()
 
     sent_links, recent_titles = load_sent_history()
-    log(f"  · 최근 7일 발송 이력: 링크 {len(sent_links)}건 (후보에서 제외)")
+    covered_terms = load_covered_terms()
+    log(f"  · 최근 7일 발송 이력: 링크 {len(sent_links)}건 (후보에서 제외) / 소개한 용어 {len(covered_terms)}개")
 
     log("1) RSS 수집 시작")
     items = fetch_entries(exclude_links=sent_links)
     log(f"→ 후보 {len(items)}건")
 
     log("2) 랭킹·요약")
-    selected = rank_and_summarize(items, recent_titles=recent_titles)
-    log(f"→ 선택 {len(selected)}건")
+    selected, glossary = rank_and_summarize(items, recent_titles=recent_titles,
+                                            covered_terms=covered_terms)
+    log(f"→ 선택 {len(selected)}건 + 용어 {len(glossary)}개")
 
     log("3) 전송·기록")
     send_digest(selected)
+    send_glossary(glossary)
     log("완료")
 
 
