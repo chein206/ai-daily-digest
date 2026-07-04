@@ -2,8 +2,9 @@ name: AI Daily Digest
 
 on:
   schedule:
-    # 매일 한국시간 08:00 (UTC 23:00 전날) — 시간 바꾸려면 이 cron만 수정
-    - cron: "0 23 * * *"
+    # 매일 한국시간 07:47 (UTC 22:47 전날) — 정시(:00)는 GitHub 러너 러시아워라 지연 심함.
+    # 어중간한 분으로 두면 대기열 경쟁이 적어 실제 도착이 8시 전후로 안정됨.
+    - cron: "47 22 * * *"
   workflow_dispatch: {}   # GitHub 웹/CLI에서 수동 실행용
 
 permissions:

@@ -104,12 +104,33 @@ def collect_feedback():
     log(f"  · 피드백 {collected}건 수거")
 
 
+# ---------------------------------------------------------------- 발송 이력
+def load_sent_history(days=7):
+    """digest_log.jsonl에서 최근 발송 이력을 읽는다. (링크 중복 제거 + 주제 중복 판단용)"""
+    log_file = DATA_DIR / "digest_log.jsonl"
+    sent_links, recent_titles = set(), []
+    if not log_file.exists():
+        return sent_links, recent_titles
+    cutoff_date = (dt.date.today() - dt.timedelta(days=days)).isoformat()
+    for line in log_file.read_text(encoding="utf-8").splitlines():
+        try:
+            e = json.loads(line)
+        except Exception:
+            continue
+        if e.get("digest_date", "") >= cutoff_date:
+            if e.get("link"):
+                sent_links.add(e["link"])
+            if e.get("title_ko"):
+                recent_titles.append(f"[{e['digest_date']}] {e['title_ko']}")
+    return sent_links, recent_titles
+
+
 # ---------------------------------------------------------------- 1) 수집
-def fetch_entries():
+def fetch_entries(exclude_links=None):
     """모든 피드에서 최근 LOOKBACK_HOURS 이내 글을 모은다. 실패한 피드는 건너뛴다."""
     cutoff = time.time() - config.LOOKBACK_HOURS * 3600
     items = []
-    seen_links = set()
+    seen_links = set(exclude_links or set())
 
     for name, url in config.FEEDS:
         try:
@@ -152,8 +173,21 @@ def _strip_html(s):
     return html.unescape(s)
 
 
+def _recent_block(recent_titles):
+    if not recent_titles:
+        return ""
+    titles = chr(10).join('- ' + t for t in recent_titles[-30:])
+    return f"""
+## 최근 이미 발송한 기사 (주제 중복 주의)
+{titles}
+
+위 목록과 같은 주제를 단순 반복하는 기사는 제외해라.
+단, 이미 다룬 주제라도 중요한 새 전개·후속 소식이면 선정하되 summary_ko에 무엇이 새로운지를 명시해라.
+"""
+
+
 # ---------------------------------------------------------------- 2) 랭킹·요약
-def rank_and_summarize(items):
+def rank_and_summarize(items, recent_titles=None):
     """Claude에게 후보를 주고 관심 태그 기준 top N을 한글 요약과 함께 받는다."""
     if not items:
         return []
@@ -178,7 +212,7 @@ def rank_and_summarize(items):
 
 ## 낮게 다룰 주제 (어지간히 중요하지 않으면 제외)
 {chr(10).join('- ' + t for t in config.DEEMPHASIZE)}
-
+{_recent_block(recent_titles)}
 ## 후보 기사
 {candidates_text}
 
@@ -312,12 +346,15 @@ def main():
     log("0) 지난 피드백 수거")
     collect_feedback()
 
+    sent_links, recent_titles = load_sent_history()
+    log(f"  · 최근 7일 발송 이력: 링크 {len(sent_links)}건 (후보에서 제외)")
+
     log("1) RSS 수집 시작")
-    items = fetch_entries()
+    items = fetch_entries(exclude_links=sent_links)
     log(f"→ 후보 {len(items)}건")
 
     log("2) 랭킹·요약")
-    selected = rank_and_summarize(items)
+    selected = rank_and_summarize(items, recent_titles=recent_titles)
     log(f"→ 선택 {len(selected)}건")
 
     log("3) 전송·기록")
