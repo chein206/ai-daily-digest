@@ -1,6 +1,6 @@
-# AI Daily Digest 🗞
+# Era 🗞 — AI Daily Digest
 
-AI 산업 뉴스를 매일 아침 텔레그램으로 받아보는 개인 학습 도구.
+**Era (에라)**: "AI 시대(era)를 매일 읽는 도구". AI 산업 뉴스를 매일 아침 텔레그램(@era26bot)으로 받아보는 개인 학습 도구.
 
 > RSS 수집 → Claude가 관심사 기준 선별·한글 요약 → 텔레그램 전송
 
