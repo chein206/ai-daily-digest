@@ -229,9 +229,9 @@ def rank_and_summarize(items, recent_titles=None, covered_terms=None):
 ## 후보 기사
 {candidates_text}
 
-## 추가 임무: 오늘의 AI 용어 2개
-AI 산업을 공부하는 독자를 위해 실무 AI 용어 2개를 골라 쉽게 설명해라.
-- 가능하면 오늘 선택한 기사에 등장하는 용어를 우선해라 (기사와 연결되면 기억에 남는다)
+## 추가 임무: 오늘의 AI 용어 {config.GLOSSARY_COUNT}개
+AI 산업을 공부하는 독자를 위해 실무 AI 용어 {config.GLOSSARY_COUNT}개를 골라 쉽게 설명해라.
+- 가능하면 위에서 선택한 기사에 등장하는 용어를 우선해라 (기사와 연결되면 기억에 남는다)
 - 설명은 비유를 섞어 2~3문장, 전문지식 없이 이해되게
 - 이미 소개한 용어 (다시 고르지 마라): {', '.join(covered_terms) if covered_terms else '(아직 없음)'}
 
@@ -250,12 +250,13 @@ AI 산업을 공부하는 독자를 위해 실무 AI 용어 2개를 골라 쉽�
     {{
       "term": "용어 (영문 원어 병기)",
       "explanation": "쉬운 한글 설명 2~3문장, 비유 포함",
-      "in_article": "오늘 기사 중 이 용어가 나온 기사 번호, 없으면 null"
+      "in_article": 이 용어가 등장한 기사의 후보번호(위 articles의 index와 동일한 정수). 선택한 기사에 없으면 null
     }}
   ]
 }}
 
-articles는 중요도 높은 순으로 정렬해라. 관심사에 걸리는 기사가 {config.MAX_ITEMS}개보다 적으면 그만큼만 선택해라. glossary는 정확히 2개."""
+articles는 중요도 높은 순으로 정렬해라. 관심사에 걸리는 기사가 {config.MAX_ITEMS}개보다 적으면 그만큼만 선택해라.
+glossary는 {config.GLOSSARY_COUNT}개 (새로 소개할 용어가 부족하면 그만큼만). in_article은 반드시 위 articles에 실제로 선택된 기사의 index여야 한다."""
 
     log(f"  Claude({MODEL})에게 {len(items)}건 랭킹 요청...")
     resp = client.messages.create(
@@ -297,6 +298,17 @@ articles는 중요도 높은 순으로 정렬해라. 관심사에 걸리는 기�
             s["link"] = items[idx]["link"]
             s["source"] = items[idx]["source"]
             out.append(s)
+
+    # 용어의 in_article(후보번호)을 실제 표시 번호(1..N)로 변환. 매칭 안 되면 참고 제거.
+    idx_to_pos = {}
+    for pos, s in enumerate(out, 1):
+        ci = s.get("index")
+        if isinstance(ci, int):
+            idx_to_pos[ci] = pos
+    for g in glossary:
+        ia = g.get("in_article")
+        g["in_article"] = idx_to_pos.get(ia) if isinstance(ia, int) else None
+
     return out, glossary
 
 

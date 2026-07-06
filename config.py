@@ -61,3 +61,4 @@ DEEMPHASIZE = [
 # --- 동작 설정 ---
 LOOKBACK_HOURS = 72   # 최근 몇 시간 내 글만 후보로 (매일 돌리면 48로 낮춰도 됨)
 MAX_ITEMS = 6         # 다이제스트에 담을 최대 기사 수
+GLOSSARY_COUNT = 5    # 매일 소개할 AI 용어 개수
