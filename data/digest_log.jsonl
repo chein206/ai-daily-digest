@@ -58,3 +58,9 @@
 {"digest_date": "2026-07-09", "item_index": 4, "title_ko": "메타 Muse Spark 1.1, 코딩 경쟁에 본격 참전", "tag": "에이전트/AI 코딩", "source": "The Verge AI", "link": "https://www.theverge.com/ai-artificial-intelligence/963193/meta-muse-spark-model-api"}
 {"digest_date": "2026-07-09", "item_index": 5, "title_ko": "GPT-Live: ChatGPT 음성모드를 위한 신세대 음성 모델", "tag": "음성 AI", "source": "OpenAI", "link": "https://openai.com/index/introducing-gpt-live"}
 {"digest_date": "2026-07-09", "item_index": 6, "title_ko": "팔로알토 CEO \"AI 가격 90% 떨어져야\" - 토큰 비용 급등 경고", "tag": "비용·라우팅", "source": "Hacker News AI", "link": "https://www.cnbc.com/2026/07/09/palo-alto-ceo-arora-ai-pricing.html"}
+{"digest_date": "2026-07-11", "item_index": 1, "title_ko": "도이치텔레콤, OpenAI와 함께 'AI 네이티브 통신사'로 전환", "tag": "응용 AI 사업·GTM 사례", "source": "OpenAI", "link": "https://openai.com/index/deutsche-telekom"}
+{"digest_date": "2026-07-11", "item_index": 2, "title_ko": "xAI, Cursor 인수 이후 첫 오퍼스급 모델 Grok 4.5 출시", "tag": "프론티어 모델·에이전트 프레임워크", "source": "Latent Space", "link": "https://www.latent.space/p/ainews-spacexai-launches-grok-45"}
+{"digest_date": "2026-07-11", "item_index": 3, "title_ko": "Sovereign AgentOps: MCP 에이전트를 위한 셀프호스팅 거버넌스 도구", "tag": "MCP·에이전트 거버넌스", "source": "Hacker News AI", "link": "https://github.com/geludobre/sovereign-agentops"}
+{"digest_date": "2026-07-11", "item_index": 4, "title_ko": "AI 에이전트 출력 평가 무료 도구 공개 (사람 라벨 + LLM 심판)", "tag": "Eval / LLM 품질 측정", "source": "Hacker News AI", "link": "https://github.com/AntoineF23/verdict"}
+{"digest_date": "2026-07-11", "item_index": 5, "title_ko": "'AI 불일치 지수': 8개 모델이 '최고의 도구'에 합의한 경우, 16번 중 0번", "tag": "Eval / LLM 품질 측정", "source": "Hacker News AI", "link": "https://data.deepsynthesis.org/"}
+{"digest_date": "2026-07-11", "item_index": 6, "title_ko": "메타 Muse Spark 1.1, API 공개하며 '컴퓨터 사용' 능력 강화", "tag": "멀티모달·에이전트 프레임워크", "source": "Simon Willison", "link": "https://simonwillison.net/2026/Jul/9/muse-spark-1-1/#atom-everything"}
