@@ -94,3 +94,9 @@
 {"digest_date": "2026-07-16", "item_index": 4, "title_ko": "Cars24, OpenAI 기반 음성·챗 에이전트로 월 100만 분 통화 처리", "tag": "응용 AI 사업 · GTM", "source": "OpenAI", "link": "https://openai.com/index/cars24"}
 {"digest_date": "2026-07-16", "item_index": 5, "title_ko": "논란의 xAI 코딩 도구 'Grok Build', 오픈소스로 전환", "tag": "AI 코딩 / 에이전트 프레임워크", "source": "Simon Willison", "link": "https://simonwillison.net/2026/Jul/15/grok-build/#atom-everything"}
 {"digest_date": "2026-07-16", "item_index": 6, "title_ko": "GPT-5.6(Codex), 샌드박스 없이 실행 시 파일 삭제 버그 원인 공개", "tag": "Eval / LLM 품질 측정", "source": "Simon Willison", "link": "https://simonwillison.net/2026/Jul/16/bad-codex-bug/#atom-everything"}
+{"digest_date": "2026-07-17", "item_index": 1, "title_ko": "OpenAI CFO가 제시한 'AI 시대 성적표' - ROI를 재는 법", "tag": "Eval / 비용 측정", "source": "OpenAI", "link": "https://openai.com/index/a-scorecard-for-the-ai-age"}
+{"digest_date": "2026-07-17", "item_index": 2, "title_ko": "GPT-Red: 셀프플레이로 스스로를 공격하는 레드팀 AI", "tag": "에이전트 안전성 / Eval", "source": "OpenAI", "link": "https://openai.com/index/unlocking-self-improvement-gpt-red"}
+{"digest_date": "2026-07-17", "item_index": 3, "title_ko": "에이전트를 무너뜨리는 '치명적 삼중주(Lethal Trifecta)'", "tag": "에이전트 프레임워크 / 보안", "source": "Hacker News AI", "link": "https://www.getjailbroken.com/"}
+{"digest_date": "2026-07-17", "item_index": 4, "title_ko": "AI 에이전트에게 Postgres 접근권을 어떻게 줄 것인가", "tag": "RAG / 에이전트-DB 연동", "source": "Hacker News AI", "link": "https://news.ycombinator.com/item?id=48949955"}
+{"digest_date": "2026-07-17", "item_index": 5, "title_ko": "NVIDIA NeMo Automodel + 🤗 Diffusers, 대규모 영상·이미지 모델 파인튜닝", "tag": "이미지·영상 생성 / 오픈소스 생태계", "source": "Hugging Face", "link": "https://huggingface.co/blog/nvidia/scale-diffusers-finetuning-nemo-automodel"}
+{"digest_date": "2026-07-17", "item_index": 6, "title_ko": "Hugging Face, 2026년 7월 보안 인시던트 공개", "tag": "Hugging Face 생태계", "source": "Hugging Face", "link": "https://huggingface.co/blog/security-incident-july-2026"}
