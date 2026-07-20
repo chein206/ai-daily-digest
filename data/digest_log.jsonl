@@ -112,3 +112,9 @@
 {"digest_date": "2026-07-19", "item_index": 4, "title_ko": "Bothread — 여러 코딩 에이전트가 충돌 없이 한 저장소를 공유하는 법", "tag": "에이전트 / 에이전트 프레임워크", "source": "Hacker News AI", "link": "https://github.com/AdamACE9/bothread"}
 {"digest_date": "2026-07-19", "item_index": 5, "title_ko": "Huginn — AI 에이전트 활동을 모니터링하는 콘솔", "tag": "에이전트 / 에이전트 프레임워크", "source": "Hacker News AI", "link": "https://github.com/tohuw/huginn"}
 {"digest_date": "2026-07-19", "item_index": 6, "title_ko": "Claude Code, 이제 Rust로 다시 쓴 Bun 런타임 사용", "tag": "Claude/Anthropic 생태계", "source": "Simon Willison", "link": "https://simonwillison.net/2026/Jul/19/claude-code-in-bun-in-rust/#atom-everything"}
+{"digest_date": "2026-07-20", "item_index": 1, "title_ko": "Ramp, 자체 AI 모델 라우터 공개 — 내부 LLM 비용 30% 절감", "tag": "비용·라우팅", "source": "Hacker News AI", "link": "https://runtimewire.com/article/ramp-router-ai-model-gateway-llm-costs"}
+{"digest_date": "2026-07-20", "item_index": 2, "title_ko": "Natural, AI 에이전트 전용 결제 인프라로 3천만 달러 투자 유치", "tag": "응용 AI 사업·GTM 사례", "source": "Hacker News AI", "link": "https://techcrunch.com/2026/07/20/natural-raises-30m-to-reinvent-payments-for-ai-agents-and-take-on-stripe/"}
+{"digest_date": "2026-07-20", "item_index": 3, "title_ko": "Provena — 에이전트 '컨텍스트 입력'을 거버넌스하는 오픈소스 라이브러리", "tag": "에이전트 프레임워크", "source": "Hacker News AI", "link": "https://github.com/rajfirke/provena"}
+{"digest_date": "2026-07-20", "item_index": 4, "title_ko": "Cognikernel — 코딩 에이전트를 위한 '로컬 지속 메모리' 도구", "tag": "Claude Code 생태계", "source": "Hacker News AI", "link": "https://github.com/KanishkNoir/cognikernel"}
+{"digest_date": "2026-07-20", "item_index": 5, "title_ko": "Hugging Face, 'Cosmos 3 Edge' 공개", "tag": "온디바이스/멀티모달", "source": "Hugging Face", "link": "https://huggingface.co/blog/nvidia/cosmos3edge"}
+{"digest_date": "2026-07-20", "item_index": 6, "title_ko": "AI 에이전틱 랜드스케이프 2026 — 전체 지형도 정리", "tag": "에이전트 프레임워크", "source": "Hacker News AI", "link": "https://trustedagents.manzia.com"}
