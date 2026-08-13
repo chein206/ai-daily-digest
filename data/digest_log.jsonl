@@ -205,3 +205,9 @@
 {"digest_date": "2026-08-12", "item_index": 4, "title_ko": "'ACE'를 더 적은 토큰으로 구현하는 법", "tag": "프롬프트·컨텍스트 설계", "source": "Hugging Face", "link": "https://huggingface.co/blog/ibm-research/altk-evolve-sldd"}
 {"digest_date": "2026-08-12", "item_index": 5, "title_ko": "NVIDIA Magpie TTS로 저지연 다국어 음성 에이전트 구축하기", "tag": "음성 AI / 온디바이스 소형 모델", "source": "Hugging Face", "link": "https://huggingface.co/blog/nvidia/magpie-tts-multilingual-voice-agents"}
 {"digest_date": "2026-08-12", "item_index": 6, "title_ko": "실시간 AI 시스템을 위한 프로덕션 스택 참조 아키텍처", "tag": "에이전트 / 에이전트 프레임워크", "source": "Hacker News AI", "link": "https://www.moss.dev/blog/the-production-ai-stack"}
+{"digest_date": "2026-08-13", "item_index": 1, "title_ko": "스타트업을 위한 GPT-5.6 빌더 가이드", "tag": "에이전트 프레임워크 / 모델 라우팅", "source": "OpenAI", "link": "https://openai.com/index/builders-guide-to-gpt-5-6"}
+{"digest_date": "2026-08-13", "item_index": 2, "title_ko": "GPT-5.6 Sol '울트라패스트' 모드, 최대 14배 속도", "tag": "비용·라우팅", "source": "OpenAI", "link": "https://openai.com/index/previewing-ultrafast"}
+{"digest_date": "2026-08-13", "item_index": 3, "title_ko": "조직은 ChatGPT를 어떻게 쓰고 있나 — OpenAI 실증 데이터 공개", "tag": "에이전트 GTM 사례", "source": "Hacker News AI", "link": "https://cdn.openai.com/pdf/how-organizations-use-chatgpt.pdf"}
+{"digest_date": "2026-08-13", "item_index": 4, "title_ko": "OlmoEarth 임베딩 — 스튜디오에서 바로 커스텀 임베딩 추출", "tag": "RAG (임베딩)", "source": "Hugging Face", "link": "https://huggingface.co/blog/allenai/olmoearth-embeddings"}
+{"digest_date": "2026-08-13", "item_index": 5, "title_ko": "Strands Agents + LeRobot + HF Storage Buckets, 한곳에서 기록·학습·배포", "tag": "에이전트 프레임워크 / Hugging Face 생태계", "source": "Hugging Face", "link": "https://huggingface.co/blog/amazon/strands-lerobot-streaming-data-loop"}
+{"digest_date": "2026-08-13", "item_index": 6, "title_ko": "제약사들이 Bio×AI에 지갑을 열다 — Chai Discovery 사례", "tag": "응용 AI 사업·GTM", "source": "Latent Space", "link": "https://www.latent.space/p/chai-discovery"}
