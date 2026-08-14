@@ -261,7 +261,7 @@ glossary는 {config.GLOSSARY_COUNT}개 (새로 소개할 용어가 부족하면 
     log(f"  Claude({MODEL})에게 {len(items)}건 랭킹 요청...")
     resp = client.messages.create(
         model=MODEL,
-        max_tokens=8000,  # thinking 블록 + JSON 출력 여유 있게
+        max_tokens=12000,  # thinking 블록 + JSON 출력 여유 있게 (MAX_ITEMS 9로 늘려 상향)
         messages=[{"role": "user", "content": prompt}],
     )
     # 응답에 thinking 블록이 섞일 수 있으니 text 블록만 골라낸다
