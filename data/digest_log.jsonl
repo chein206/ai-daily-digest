@@ -292,3 +292,6 @@
 {"digest_date": "2026-08-22", "item_index": 7, "title_ko": "Muse Video 유출, Ramp Router 출시, 그리고 Stripe가 OpenRouter를 인수한 이유", "tag": "비용·라우팅/GTM", "source": "TLDR AI", "link": "https://tldr.tech/ai/2026-08-20"}
 {"digest_date": "2026-08-22", "item_index": 8, "title_ko": "리누스 토르발스가 말하는 'AI와 함께한 지옥의 디버깅 세션'", "tag": "AI 코딩/바이브코딩", "source": "Simon Willison", "link": "https://simonwillison.net/2026/Aug/22/linus-torvalds/"}
 {"digest_date": "2026-08-22", "item_index": 9, "title_ko": "매트 웹, ChatGPT를 '인내심 있는 튜터'로 활용해 수학을 독학하다", "tag": "프롬프트·컨텍스트 설계", "source": "Simon Willison", "link": "https://simonwillison.net/2026/Aug/21/matt-webb/"}
+{"digest_date": "2026-08-23", "item_index": 1, "title_ko": "앤트로픽, 매출은 급증하는데 유저 확보엔 고전 중", "tag": "Claude/Anthropic 생태계", "source": "Simon Willison", "link": "https://simonwillison.net/2026/Aug/23/anthropics-best-ai-model-struggles-to-attract-users-as-cheaper-t/"}
+{"digest_date": "2026-08-23", "item_index": 2, "title_ko": "Fable 이후, 왜 다시 코딩 하네스와 컨텍스트 전략이 중요해졌나", "tag": "프롬프트·컨텍스트 설계", "source": "Simon Willison", "link": "https://simonwillison.net/2026/Aug/23/drew-breunig/"}
+{"digest_date": "2026-08-23", "item_index": 3, "title_ko": "10만 달러 이상 엔터프라이즈 딜 클로징하는 법, 단계별로", "tag": "AI 제품기획·PM", "source": "Lenny's Newsletter", "link": "https://www.lennysnewsletter.com/p/how-to-close-100k-1m-deals-step-by"}
