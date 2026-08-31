@@ -1,0 +1,49 @@
+name: Era Bot Poll
+
+# /start · /test 명령과 👍/👎 피드백만 수거한다.
+# RSS 수집·Claude 호출·다이제스트 발송이 없어 자주 돌려도 비용이 들지 않는다.
+on:
+  schedule:
+    - cron: "23 * * * *"   # 매시 23분 (정시는 러너 대기열이 밀림)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: era-bot-telegram   # 다이제스트 워크플로와 같은 그룹 — getUpdates 동시 실행 방지
+  cancel-in-progress: false
+
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Poll telegram
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_EXTRA_CHAT_IDS: ${{ secrets.TELEGRAM_EXTRA_CHAT_IDS }}
+        run: python digest.py --poll
+
+      - name: Commit state
+        run: |
+          git config user.name "digest-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/ || true
+          git diff --cached --quiet && exit 0
+          git commit -m "chore: telegram poll ($(date -u +%FT%H:%MZ))"
+          git pull --rebase --autostash || true
+          git push || true

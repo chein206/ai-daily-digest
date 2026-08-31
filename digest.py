@@ -90,11 +90,9 @@ def collect_feedback():
         max_id = max(max_id, u.get("update_id", 0))
         cq = u.get("callback_query")
         if not cq:
-            # /start 를 누른 사람에게 chat_id를 안내하고, 소유자에게도 알린다.
-            # (구독은 자동이 아님 — 소유자가 TELEGRAM_EXTRA_CHAT_IDS에 넣어줘야 발송된다)
-            msg = u.get("message") or {}
-            if str(msg.get("text", "")).strip().startswith("/start"):
-                _handle_start(msg)
+            # /start · /test 등 명령어 처리 (구독은 자동이 아님 —
+            # 소유자가 TELEGRAM_EXTRA_CHAT_IDS에 넣어줘야 발송된다)
+            _handle_command(u.get("message") or {})
             continue
         data = cq.get("data", "")
         # 형식: fb|2026-07-04|3|up
@@ -130,34 +128,86 @@ def collect_feedback():
     log(f"  · 피드백 {collected}건 수거")
 
 
-def _handle_start(msg):
-    """새 사람이 /start 를 누르면 본인에게는 안내를, 소유자에게는 등록용 chat_id를 보낸다.
-    chat_id는 공개 Actions 로그에 찍지 않고 텔레그램 DM으로만 전달한다."""
+def _handle_command(msg):
+    """봇에게 온 명령어 처리. 현재 지원: /start (구독 요청), /test (전송 점검).
+    다이제스트 발송이나 Claude 호출은 하지 않는다 — 가벼운 폴링에서도 안전하게 돌아간다."""
+    text = str(msg.get("text", "")).strip()
     chat = msg.get("chat") or {}
     cid = chat.get("id")
     if cid is None:
-        return
-    name = chat.get("username") or " ".join(
+        return False
+
+    if text.startswith("/start"):
+        _handle_start(chat, cid)
+        return True
+    if text.startswith("/test"):
+        _handle_test(chat, cid)
+        return True
+    return False
+
+
+def _display_name(chat):
+    return chat.get("username") or " ".join(
         x for x in (chat.get("first_name"), chat.get("last_name")) if x
     ) or "이름없음"
 
+
+def _handle_start(chat, cid):
+    """새 사람이 /start 를 누르면 본인에게는 안내를, 소유자에게는 등록용 chat_id를 보낸다.
+    chat_id는 공개 Actions 로그에 찍지 않고 텔레그램 DM으로만 전달한다."""
     lines = [
         "<b>🗞 AI 데일리 다이제스트</b>",
         "",
         "매일 아침 AI 소식을 골라 보내드립니다.",
         f"구독 등록용 번호: <code>{cid}</code>",
         "이 번호를 운영자에게 보내주시면 다음 발송부터 받아보실 수 있어요.",
+        "",
+        "잘 도착하는지 확인하려면 <code>/test</code> 를 보내보세요.",
     ]
     _tg_send({"chat_id": cid, "text": "\n".join(lines), "parse_mode": "HTML"})
 
     if str(cid) != str(CHAT_ID):
         notice = [
-            f"👤 새 구독 요청: <b>{html.escape(str(name))}</b>",
+            f"👤 새 구독 요청: <b>{html.escape(str(_display_name(chat)))}</b>",
             f"chat_id: <code>{cid}</code>",
             "TELEGRAM_EXTRA_CHAT_IDS 시크릿에 콤마로 추가하면 발송됩니다.",
         ]
         _tg_send({"chat_id": CHAT_ID, "text": "\n".join(notice), "parse_mode": "HTML"})
     log("  · /start 1건 처리 (chat_id는 DM으로만 전달)")
+
+
+def _handle_test(chat, cid):
+    """/test — 이 사람에게 실제로 메시지가 닿는지, 구독자 명단에 있는지 즉시 알려준다."""
+    registered = str(cid) in [str(r) for r in RECIPIENTS]
+    is_owner = str(cid) == str(CHAT_ID)
+
+    if registered:
+        status = "✅ 구독 등록됨 — 매일 아침 발송 대상입니다."
+    else:
+        status = ("⚠️ 아직 등록 전입니다. 메시지는 닿지만 매일 발송 대상은 아니에요.\n"
+                  f"운영자에게 이 번호를 전해주세요: <code>{cid}</code>")
+
+    lines = [
+        "<b>🔔 전송 테스트</b>",
+        "",
+        "이 메시지가 보이면 봇 → 나 방향은 정상입니다.",
+        status,
+    ]
+    if is_owner:
+        others = [r for r in RECIPIENTS if str(r) != str(CHAT_ID)]
+        lines += ["", f"현재 수신자 {len(RECIPIENTS)}명 (나 + 지인 {len(others)}명)"]
+
+    _tg_send({"chat_id": cid, "text": "\n".join(lines), "parse_mode": "HTML"})
+
+    if not is_owner:
+        _tg_send({
+            "chat_id": CHAT_ID,
+            "text": (f"🔔 /test 수신: <b>{html.escape(str(_display_name(chat)))}</b>\n"
+                     f"chat_id: <code>{cid}</code> · "
+                     + ("등록됨" if registered else "미등록")),
+            "parse_mode": "HTML",
+        })
+    log("  · /test 1건 처리")
 
 
 # ---------------------------------------------------------------- 발송 이력
@@ -472,15 +522,28 @@ def send_glossary(glossary):
 
 
 # ---------------------------------------------------------------- main
-def main():
-    missing = [k for k, v in {
-        "TELEGRAM_BOT_TOKEN": TELEGRAM_TOKEN,
-        "TELEGRAM_CHAT_ID": CHAT_ID,
-        "ANTHROPIC_API_KEY": ANTHROPIC_API_KEY,
-    }.items() if not v]
+def _require(keys):
+    missing = [k for k, v in keys.items() if not v]
     if missing:
         log(f"환경변수 누락: {', '.join(missing)} — .env 확인")
         sys.exit(1)
+
+
+def poll_only():
+    """명령어(/start·/test)와 피드백 버튼만 수거한다.
+    RSS도, Claude 호출도, 다이제스트 발송도 하지 않는다 — 자주 돌려도 비용이 없다."""
+    _require({"TELEGRAM_BOT_TOKEN": TELEGRAM_TOKEN, "TELEGRAM_CHAT_ID": CHAT_ID})
+    log("폴링 전용 실행 (발송 없음)")
+    collect_feedback()
+    log("완료")
+
+
+def main():
+    _require({
+        "TELEGRAM_BOT_TOKEN": TELEGRAM_TOKEN,
+        "TELEGRAM_CHAT_ID": CHAT_ID,
+        "ANTHROPIC_API_KEY": ANTHROPIC_API_KEY,
+    })
 
     log("0) 지난 피드백 수거")
     log(f"  · 수신자 {len(RECIPIENTS)}명")
@@ -506,4 +569,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if "--poll" in sys.argv:
+        poll_only()
+    else:
+        main()
