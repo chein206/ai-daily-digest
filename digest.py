@@ -15,6 +15,7 @@ import sys
 import json
 import time
 import html
+import hashlib
 import datetime as dt
 from pathlib import Path
 
@@ -34,7 +35,13 @@ except Exception:
 load_dotenv()
 
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
+CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")          # 소유자(본인). 피드백 is_owner 판정 기준
+# 지인 추가 수신자: 콤마로 구분한 chat_id 목록 (예: "123456789,987654321")
+# 상대가 봇에 /start 를 한 번 눌러야 봇이 말을 걸 수 있다. chat_id는 /start 시 자동 안내됨.
+_EXTRA_CHAT_IDS = os.getenv("TELEGRAM_EXTRA_CHAT_IDS", "")
+RECIPIENTS = list(dict.fromkeys(
+    c.strip() for c in ([CHAT_ID] + _EXTRA_CHAT_IDS.split(",")) if c and c.strip()
+))
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-5")
 
@@ -44,6 +51,15 @@ DATA_DIR = Path(__file__).parent / "data"
 
 def log(msg):
     print(f"[{dt.datetime.now().strftime('%H:%M:%S')}] {msg}", flush=True)
+
+
+def _user_key(uid):
+    """텔레그램 user_id를 공개 저장소에 남겨도 되는 익명 키로 바꾼다.
+    봇 토큰을 소금으로 써서 토큰을 모르면 원본 id를 되찾을 수 없다."""
+    if uid is None:
+        return None
+    h = hashlib.sha256(f"{TELEGRAM_TOKEN}:{uid}".encode("utf-8")).hexdigest()
+    return h[:12]
 
 
 def _append_jsonl(path, obj):
@@ -74,6 +90,11 @@ def collect_feedback():
         max_id = max(max_id, u.get("update_id", 0))
         cq = u.get("callback_query")
         if not cq:
+            # /start 를 누른 사람에게 chat_id를 안내하고, 소유자에게도 알린다.
+            # (구독은 자동이 아님 — 소유자가 TELEGRAM_EXTRA_CHAT_IDS에 넣어줘야 발송된다)
+            msg = u.get("message") or {}
+            if str(msg.get("text", "")).strip().startswith("/start"):
+                _handle_start(msg)
             continue
         data = cq.get("data", "")
         # 형식: fb|2026-07-04|3|up
@@ -81,11 +102,16 @@ def collect_feedback():
         if len(parts) != 4 or parts[0] != "fb":
             continue
         _, date, idx, verdict = parts
+        # 버튼 누른 사람 — 수신자가 여럿일 때 취향이 섞이지 않게 구분한다.
+        # 저장소가 public이라 원본 텔레그램 id/이름은 남기지 않고 해시만 쓴다.
+        uid = (cq.get("from") or {}).get("id")
         _append_jsonl(DATA_DIR / "feedback.jsonl", {
             "ts": dt.datetime.now().isoformat(timespec="seconds"),
             "digest_date": date,
             "item_index": int(idx),
             "verdict": verdict,          # "up" | "down"
+            "user": _user_key(uid),      # 익명 키 (같은 사람=같은 값, 역추적 불가)
+            "is_owner": str(uid) == str(CHAT_ID),   # 랭킹 기준으로 쓸 피드백은 본인 것만
         })
         collected += 1
         # 버튼 누른 사람에게 즉시 토스트 응답
@@ -102,6 +128,36 @@ def collect_feedback():
         offset_file.write_text(json.dumps({"offset": max_id}), encoding="utf-8")
 
     log(f"  · 피드백 {collected}건 수거")
+
+
+def _handle_start(msg):
+    """새 사람이 /start 를 누르면 본인에게는 안내를, 소유자에게는 등록용 chat_id를 보낸다.
+    chat_id는 공개 Actions 로그에 찍지 않고 텔레그램 DM으로만 전달한다."""
+    chat = msg.get("chat") or {}
+    cid = chat.get("id")
+    if cid is None:
+        return
+    name = chat.get("username") or " ".join(
+        x for x in (chat.get("first_name"), chat.get("last_name")) if x
+    ) or "이름없음"
+
+    lines = [
+        "<b>🗞 AI 데일리 다이제스트</b>",
+        "",
+        "매일 아침 AI 소식을 골라 보내드립니다.",
+        f"구독 등록용 번호: <code>{cid}</code>",
+        "이 번호를 운영자에게 보내주시면 다음 발송부터 받아보실 수 있어요.",
+    ]
+    _tg_send({"chat_id": cid, "text": "\n".join(lines), "parse_mode": "HTML"})
+
+    if str(cid) != str(CHAT_ID):
+        notice = [
+            f"👤 새 구독 요청: <b>{html.escape(str(name))}</b>",
+            f"chat_id: <code>{cid}</code>",
+            "TELEGRAM_EXTRA_CHAT_IDS 시크릿에 콤마로 추가하면 발송됩니다.",
+        ]
+        _tg_send({"chat_id": CHAT_ID, "text": "\n".join(notice), "parse_mode": "HTML"})
+    log("  · /start 1건 처리 (chat_id는 DM으로만 전달)")
 
 
 # ---------------------------------------------------------------- 발송 이력
@@ -321,21 +377,32 @@ def _tg_send(payload):
     return data
 
 
+def _broadcast(payload):
+    """같은 메시지를 모든 수신자에게. 한 명이 실패해도(차단·탈퇴 등) 나머지는 계속 간다."""
+    for cid in RECIPIENTS:
+        try:
+            data = _tg_send(dict(payload, chat_id=cid))
+            if not data.get("ok"):
+                log(f"    ({cid} 실패 — 나머지 계속)")
+        except Exception as ex:
+            log(f"  ! {cid} 전송 오류: {ex} (나머지 계속)")
+        if len(RECIPIENTS) > 1:
+            time.sleep(0.15)   # 텔레그램 초당 30건 제한 여유
+
+
 def send_digest(selected):
     """헤더 1건 + 기사별 메시지(👍/👎 버튼)로 전송하고 발송 내역을 기록한다."""
     today = dt.datetime.now().strftime("%Y-%m-%d")
     today_label = dt.datetime.now().strftime("%Y-%m-%d (%a)")
 
     if not selected:
-        _tg_send({
-            "chat_id": CHAT_ID,
+        _broadcast({
             "text": f"<b>🗞 AI 데일리 다이제스트</b> · {today_label}\n\n최근 {config.LOOKBACK_HOURS}시간 내 관심사에 맞는 새 글이 없었어요.",
             "parse_mode": "HTML",
         })
         return
 
-    _tg_send({
-        "chat_id": CHAT_ID,
+    _broadcast({
         "text": f"<b>🗞 AI 데일리 다이제스트</b> · {today_label} · {len(selected)}건\n각 기사의 👍/👎 로 선별 품질을 알려주세요 — Eval 데이터가 됩니다.",
         "parse_mode": "HTML",
     })
@@ -353,8 +420,7 @@ def send_digest(selected):
                 + (f"💡 {why}\n" if why else "")
                 + f"🔗 <a href=\"{html.escape(link)}\">{src}</a>")
 
-        _tg_send({
-            "chat_id": CHAT_ID,
+        _broadcast({
             "text": text,
             "parse_mode": "HTML",
             "disable_web_page_preview": True,
@@ -398,8 +464,7 @@ def send_glossary(glossary):
             "term": g.get("term", ""),
             "explanation": g.get("explanation", ""),
         })
-    _tg_send({
-        "chat_id": CHAT_ID,
+    _broadcast({
         "text": "\n".join(lines).strip(),
         "parse_mode": "HTML",
     })
@@ -418,6 +483,7 @@ def main():
         sys.exit(1)
 
     log("0) 지난 피드백 수거")
+    log(f"  · 수신자 {len(RECIPIENTS)}명")
     collect_feedback()
 
     sent_links, recent_titles = load_sent_history()

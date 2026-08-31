@@ -102,8 +102,28 @@ pip install -r requirements.txt
 python digest.py
 ```
 
-GitHub Actions로 돌리려면 저장소 시크릿 3개를 등록한다
-(Settings → Secrets and variables → Actions).
+GitHub Actions로 돌리려면 저장소 시크릿을 등록한다
+(Settings → Secrets and variables → Actions): `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`,
+`ANTHROPIC_API_KEY`, 그리고 선택 항목 `TELEGRAM_EXTRA_CHAT_IDS`.
+
+## 여러 명이 받아보기
+
+`TELEGRAM_CHAT_ID`는 소유자(본인), `TELEGRAM_EXTRA_CHAT_IDS`는 콤마로 구분한 추가 수신자다.
+
+```
+TELEGRAM_EXTRA_CHAT_IDS=123456789,987654321
+```
+
+등록 흐름: 받을 사람이 봇에 `/start` → 봇이 그 사람에게 chat_id를 안내하고 소유자에게도 알림 →
+소유자가 시크릿에 추가. 자동 구독이 아닌 이유는 수신자를 소유자가 통제하기 위해서다.
+
+설계상 지켜지는 것:
+
+- **랭킹은 하루 1회**. 모두 같은 기사를 받는다 (API 비용이 사람 수에 비례하지 않음).
+- **한 명이 실패해도 나머지는 간다** (봇 차단·탈퇴 대응).
+- **피드백은 사람별로 구분되되 익명이다.** 저장소가 public이라 원본 텔레그램 id 대신
+  봇 토큰을 소금으로 쓴 해시(`user`)를 남긴다. 같은 사람은 같은 키, 역추적은 불가.
+  `is_owner: true`인 피드백만 내 선별 기준으로 쓰면 지인 취향이 랭킹을 흔들지 않는다.
 
 ## 로드맵
 
