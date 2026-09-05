@@ -392,3 +392,12 @@
 {"digest_date": "2026-09-04", "item_index": 7, "title_ko": "Benedict Evans: AI, 도구, 그리고 전환", "tag": "AI 제품기획·PM", "source": "Benedict Evans", "link": "https://www.ben-evans.com/benedictevans/2026/9/3/ai-tools-and-transformation"}
 {"digest_date": "2026-09-04", "item_index": 8, "title_ko": "Claude Fable/Mythos 5.1, 캐시 가격 75% 인하·출력 토큰 70% 증가", "tag": "Claude/Anthropic 생태계", "source": "Latent Space", "link": "https://www.latent.space/p/ainews-claude-fablemythos-51-new"}
 {"digest_date": "2026-09-04", "item_index": 9, "title_ko": "엔비디아, 유휴 PC를 개인용 AI 데이터센터로 묶는 무료 툴 출시", "tag": "음성 AI / 온디바이스 소형 모델", "source": "The Verge AI", "link": "https://www.theverge.com/ai-artificial-intelligence/989435/nvidia-pair-personal-ai-router-home-local-llm-compute-tool-rtx-macbook"}
+{"digest_date": "2026-09-05", "item_index": 1, "title_ko": "Show HN: Coder Eval — 에이전트 평가를 위한 프레임워크", "tag": "Eval / LLM 품질 측정", "source": "Show HN", "link": "https://github.com/uipath/coder_eval"}
+{"digest_date": "2026-09-05", "item_index": 2, "title_ko": "AI는 이제 회로기판을 설계할 수 있는가?", "tag": "Eval / LLM 품질 측정", "source": "Hacker News AI", "link": "https://eebench.org/blog/can-ai-design-circuit-boards-yet/"}
+{"digest_date": "2026-09-05", "item_index": 3, "title_ko": "오픈웨이트 VLM·OCR·비전 모델을 하나의 API로 서빙하기", "tag": "RAG / 멀티모달", "source": "Show HN", "link": "https://www.vlmrun.com/gateway"}
+{"digest_date": "2026-09-05", "item_index": 4, "title_ko": "Show HN: Personal Context MCP", "tag": "MCP", "source": "Show HN", "link": "https://lanes.sh/showcase/personal-context-mcp"}
+{"digest_date": "2026-09-05", "item_index": 5, "title_ko": "Show HN: Ccswitch — Claude Code 계정 다중 전환 도구", "tag": "Claude/Anthropic 생태계", "source": "Show HN", "link": "https://github.com/2hmad/ccswitch"}
+{"digest_date": "2026-09-05", "item_index": 6, "title_ko": "에이전트끼리 서로 결제하는 서비스 등장", "tag": "에이전트 프레임워크", "source": "Show HN", "link": "https://openspender.com/agent-to-agent"}
+{"digest_date": "2026-09-05", "item_index": 7, "title_ko": "Show HN: Moadim.io — 에이전트 전용 스케줄러", "tag": "에이전트 프레임워크", "source": "Show HN", "link": "https://moadim.io/"}
+{"digest_date": "2026-09-05", "item_index": 8, "title_ko": "Show HN: Sageling — MLX 기반 맥용 로컬 AI 에이전트", "tag": "온디바이스 소형 모델", "source": "Hacker News AI", "link": "https://sageling.ai/"}
+{"digest_date": "2026-09-05", "item_index": 9, "title_ko": "Macha: 응답 스타일 변경만으로 토큰 42% 절약", "tag": "프롬프트·컨텍스트 설계", "source": "Hacker News AI", "link": "https://github.com/kingroryg/macha"}
