@@ -455,3 +455,12 @@
 {"digest_date": "2026-09-12", "item_index": 7, "title_ko": "Graphify C# — 코딩 에이전트를 위한 컴파일러 수준 정확도의 '사용처 찾기' 도구", "tag": "에이전트 프레임워크", "source": "Show HN", "link": "https://github.com/zachsaw/graphify-csharp"}
 {"digest_date": "2026-09-12", "item_index": 8, "title_ko": "Spanda — Rust로 만든 마이크로초 단위 LLM 불확실성 측정기", "tag": "Eval / LLM 품질 측정", "source": "Show HN", "link": "https://github.com/Adarshent/Spnda"}
 {"digest_date": "2026-09-12", "item_index": 9, "title_ko": "Stroq — MCP 도구 출력을 통한 명령어 주입 차단 도구", "tag": "MCP", "source": "Show HN", "link": "https://stroq.dev/"}
+{"digest_date": "2026-09-13", "item_index": 1, "title_ko": "Real-SWE: 비공개 실제 엔터프라이즈 코드베이스로 AI 모델 벤치마킹하기", "tag": "Eval / LLM 품질 측정", "source": "Hacker News AI", "link": "https://withspecific.com/benchmarks/real-swe"}
+{"digest_date": "2026-09-13", "item_index": 2, "title_ko": "Lenny's Newsletter: AI 활용 사례와 플랫폼 팀 비즈니스 케이스 커뮤니티 인사이트", "tag": "AI 제품기획·PM", "source": "Lenny's Newsletter", "link": "https://www.lennysnewsletter.com/p/community-wisdom-ai-basketball-coaching"}
+{"digest_date": "2026-09-13", "item_index": 3, "title_ko": "Show HN: MCP 기반 AI 브라우저 자동화 오픈소스 시스템", "tag": "에이전트 / 에이전트 프레임워크", "source": "Hacker News AI", "link": "https://github.com/rakutentech/sorify"}
+{"digest_date": "2026-09-13", "item_index": 4, "title_ko": "AgentsDock: 에이전틱 AI 연구를 위한 전용 IDE", "tag": "에이전트 / 에이전트 프레임워크", "source": "Hacker News AI", "link": "https://agentsdock.net/"}
+{"digest_date": "2026-09-13", "item_index": 5, "title_ko": "포워드 디플로이드 엔지니어(FDE)의 부상 — 제대로 하는 법", "tag": "AI 제품기획·PM", "source": "Latent Space", "link": "https://www.latent.space/p/forward-deployed-engineer-best-practices"}
+{"digest_date": "2026-09-13", "item_index": 6, "title_ko": "GPT-6 Astra로 달리기 코스 자동 생성하기", "tag": "프롬프트·컨텍스트 설계", "source": "Simon Willison", "link": "https://simonwillison.net/2026/Sep/12/astra-running-routes/"}
+{"digest_date": "2026-09-13", "item_index": 7, "title_ko": "DeepSeek v4.1-Flash: 763B 규모 새 인코더-디코더 아키텍처 공개", "tag": "Hugging Face·오픈소스 모델 생태계", "source": "Latent Space", "link": "https://www.latent.space/p/ainews-deepseek-v41-flash-763b-p8b"}
+{"digest_date": "2026-09-13", "item_index": 8, "title_ko": "Cognition, GPT-6 Astra로 Devin의 자체 테스트 능력 강화", "tag": "에이전트 / 에이전트 프레임워크", "source": "OpenAI", "link": "https://openai.com/index/cognition-devin-testing-with-astra"}
+{"digest_date": "2026-09-13", "item_index": 9, "title_ko": "Codex와 ChatGPT로 신규 항생물질 후보 탐색하는 연구자", "tag": "응용 AI 사업·GTM 사례", "source": "OpenAI", "link": "https://openai.com/index/using-codex-chatgpt-to-search-for-new-antimicrobials"}
