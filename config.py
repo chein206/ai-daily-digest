@@ -14,19 +14,20 @@ FEEDS = [
     # 2층: 빌더/엔지니어 심화 (핵심)
     ("Simon Willison","https://simonwillison.net/atom/everything/"),
     ("Latent Space",  "https://www.latent.space/feed"),
-    ("Import AI",     "https://importai.substack.com/feed"),
-    ("Interconnects", "https://www.interconnects.ai/feed"),
     # 3층: 매일 훑기 + 원천 신호
     ("TLDR AI",       "https://tldr.tech/api/rss/ai"),
-    ("Hacker News AI","https://hnrss.org/newest?q=AI&count=30"),
+    ("Hacker News AI","https://hnrss.org/newest?q=AI&count=12"),
     # 4층: AI 활용·미디어 트렌드 (이미지·영상 생성, 오픈소스 생태계, 소비자 제품)
     ("Hugging Face",  "https://huggingface.co/blog/feed.xml"),
     ("The Verge AI",  "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"),
     # 5층: 제품기획(PM) · 1인 사업 (2026-08-14 추가)
     ("Lenny's Newsletter","https://www.lennysnewsletter.com/feed"),   # PM 실무 정석
     ("Product Compass",  "https://www.productcompass.pm/feed"),       # AI PM 전용
-    ("Show HN",          "https://hnrss.org/show?count=30"),          # 개인이 만든 제품 출시 원천 신호
-    ("Benedict Evans",   "https://www.ben-evans.com/benedictevans?format=rss"),  # 시장·사업 관점
+    ("Show HN",          "https://hnrss.org/show?count=12"),          # 개인이 만든 제품 출시 원천 신호
+    # --- 2026-09-17 정리: 최근 28일 채택 실적이 바닥이라 제외 ---
+    # ("Import AI",        "https://importai.substack.com/feed"),     # 피드 파싱 실패로 28일간 0건 (깨진 피드)
+    # ("Interconnects",    "https://www.interconnects.ai/feed"),      # 28일간 2건
+    # ("Benedict Evans",   "https://www.ben-evans.com/benedictevans?format=rss"),  # 28일간 1건
     # --- 옵션 (원하면 주석 해제) ---
     # ("Exponential View",   "https://www.exponentialview.co/feed"),
     # ("Pragmatic Engineer", "https://newsletter.pragmaticengineer.com/feed"),
@@ -78,3 +79,30 @@ LOOKBACK_HOURS = 48   # 매일 도니 72시간은 중복 후보만 늘린다 (72
 MAX_ITEMS = 6         # 다이제스트에 담을 최대 기사 수 (9 → 6, 출력 토큰 직결)
 GLOSSARY_COUNT = 3    # 매일 소개할 AI 용어 개수 (5 → 3, 설명이 2~3문장이라 덩어리가 크다)
 MAX_CANDIDATES = 60   # Claude에 넘길 후보 상한 — 입력 토큰 폭주 방지 (0이면 무제한)
+PER_FEED_LIMIT = 10   # 피드 하나가 후보를 독식하지 못하게 (0이면 무제한)
+                      # 실측: HN AI 30 + Show HN 26 = 후보 82건 중 68%를 HN 두 개가 차지했다.
+                      # 기간(LOOKBACK)을 줄여도 HN이 cap을 채워버려 입력이 안 줄었다.
+                      # 후보 풀 자체를 줄이는 건 이 상한이다.
+
+# --- 태그 고정 목록 ---
+# Claude가 태그를 자유 작문하면 집계가 갈라진다.
+# 실제로 "에이전트 프레임워크" / "에이전트 / 에이전트 프레임워크",
+# "비용·라우팅" / "비용·라우팅·멀티모달" 처럼 같은 뜻이 따로 세어졌다.
+# 아래 목록에서만 고르게 해 피드백·통계가 한 줄로 모이게 한다.
+TAGS = [
+    "에이전트",
+    "RAG / 검색",
+    "Eval / 품질 측정",
+    "프롬프트·컨텍스트 설계",
+    "비용·라우팅·멀티모달",
+    "Claude/Anthropic 생태계",
+    "AI 제품기획·PM",
+    "AI 코딩·바이브코딩",
+    "추론 모델·학습",
+    "음성·온디바이스",
+    "이미지·영상 생성",
+    "오픈소스 모델 생태계",
+    "AI 1인 사업·인디해커",
+    "구현기·튜토리얼",
+    "시장·산업 동향",
+]

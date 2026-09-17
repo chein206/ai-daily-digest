@@ -261,7 +261,11 @@ def fetch_entries(exclude_links=None):
                 log(f"  ! {name}: 피드 파싱 실패 (건너뜀)")
                 continue
             count = 0
+            per_feed = getattr(config, "PER_FEED_LIMIT", 0)
             for e in feed.entries:
+                # 피드 하나가 후보를 독식하지 못하게 (HN 계열이 68%를 먹던 문제)
+                if per_feed and count >= per_feed:
+                    break
                 ts = None
                 for key in ("published_parsed", "updated_parsed"):
                     if getattr(e, key, None):
@@ -369,7 +373,7 @@ AI 산업을 공부하는 독자를 위해 실무 AI 용어 {config.GLOSSARY_COU
       "index": 후보번호(정수),
       "title_ko": "한글로 다듬은 제목",
       "summary_ko": "2~3문장 한글 요약. 이게 왜 중요한지/무엇이 새로운지 중심으로.",
-      "tag": "이 기사가 걸린 관심사 한 개",
+      "tag": "아래 '태그 목록'에 있는 문자열 중 정확히 하나. 변형·조합·새 태그 금지",
       "why": "독자에게 왜 볼 가치가 있는지 한 문장"
     }}
   ],
@@ -381,6 +385,9 @@ AI 산업을 공부하는 독자를 위해 실무 AI 용어 {config.GLOSSARY_COU
     }}
   ]
 }}
+
+## 태그 목록 (tag 필드는 반드시 이 중 하나를 글자 그대로)
+{chr(10).join('- ' + t for t in config.TAGS)}
 
 articles는 중요도 높은 순으로 정렬해라. 관심사에 걸리는 기사가 {config.MAX_ITEMS}개보다 적으면 그만큼만 선택해라.
 glossary는 {config.GLOSSARY_COUNT}개 (새로 소개할 용어가 부족하면 그만큼만). in_article은 반드시 위 articles에 실제로 선택된 기사의 index여야 한다."""
@@ -431,10 +438,24 @@ glossary는 {config.GLOSSARY_COUNT}개 (새로 소개할 용어가 부족하면 
         articles = parsed.get("articles", [])
         glossary = parsed.get("glossary", [])
 
+    # 태그 정규화 — 프롬프트로 목록을 줘도 변형해서 쓰는 경우가 있어 코드에서 한 번 더 고정한다.
+    # 목록 밖 값이면 부분일치로 맞춰보고, 그래도 안 되면 "기타"로 모은다(집계가 갈라지지 않게).
+    allowed = getattr(config, "TAGS", [])
+    def _fix_tag(t):
+        t = (t or "").strip()
+        if not allowed or t in allowed:
+            return t
+        for a in allowed:
+            if a in t or t in a:
+                return a
+        log(f"  · 태그 목록 밖: {t!r} → '기타'")
+        return "기타"
+
     out = []
     for s in articles:
         idx = s.get("index")
         if isinstance(idx, int) and 0 <= idx < len(items):
+            s["tag"] = _fix_tag(s.get("tag"))
             s["link"] = items[idx]["link"]
             s["source"] = items[idx]["source"]
             out.append(s)
