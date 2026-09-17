@@ -5,7 +5,17 @@ on:
     # 매일 한국시간 07:47 (UTC 22:47 전날) — 정시(:00)는 GitHub 러너 러시아워라 지연 심함.
     # 어중간한 분으로 두면 대기열 경쟁이 적어 실제 도착이 8시 전후로 안정됨.
     - cron: "47 22 * * *"
-  workflow_dispatch: {}   # GitHub 웹/CLI에서 수동 실행용
+  workflow_dispatch:      # GitHub 웹/CLI에서 수동 실행용
+    inputs:
+      model:
+        description: "모델 (비우면 기본값)"
+        required: false
+        default: ""
+      compare:
+        description: "모델 비교 실행 — 발송 이력 제외를 끄고 로그도 남기지 않는다"
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write   # 피드백/발송 로그를 저장소에 커밋하기 위해
@@ -41,8 +51,8 @@ jobs:
           # DIGEST_ANTHROPIC_API_KEY 시크릿을 등록하면 그 키만 쓰고, 없으면 아래 공용 키로 폴백.
           DIGEST_ANTHROPIC_API_KEY: ${{ secrets.DIGEST_ANTHROPIC_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          CLAUDE_MODEL: claude-sonnet-5
-        run: python digest.py
+          CLAUDE_MODEL: ${{ inputs.model || 'claude-sonnet-5' }}
+        run: python digest.py ${{ inputs.compare && '--compare' || '' }}
 
       - name: Commit feedback & digest log
         run: |

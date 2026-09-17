@@ -65,7 +65,13 @@ def _user_key(uid):
     return h[:12]
 
 
+# 모델 비교용 임시 실행 플래그. 켜지면 로그를 남기지 않아 운영 이력이 오염되지 않는다.
+COMPARE_MODE = False
+
+
 def _append_jsonl(path, obj):
+    if COMPARE_MODE:
+        return   # 비교 실행은 기록하지 않는다 (내일 후보 풀·용어 중복 제외에 영향 없게)
     DATA_DIR.mkdir(exist_ok=True)
     with open(path, "a", encoding="utf-8") as f:
         f.write(json.dumps(obj, ensure_ascii=False) + "\n")
@@ -507,10 +513,17 @@ def send_digest(selected):
         })
         return
 
-    _broadcast({
-        "text": f"<b>🗞 AI 데일리 다이제스트</b> · {today_label} · {len(selected)}건\n각 기사의 👍/👎 로 선별 품질을 알려주세요 — Eval 데이터가 됩니다.",
-        "parse_mode": "HTML",
-    })
+    if COMPARE_MODE:
+        _broadcast({
+            "text": f"<b>🧪 모델 비교 실행</b> · {MODEL} · {len(selected)}건\n"
+                    f"같은 후보 풀로 뽑은 결과입니다. 기록은 남기지 않습니다.",
+            "parse_mode": "HTML",
+        })
+    else:
+        _broadcast({
+            "text": f"<b>🗞 AI 데일리 다이제스트</b> · {today_label} · {len(selected)}건\n각 기사의 👍/👎 로 선별 품질을 알려주세요 — Eval 데이터가 됩니다.",
+            "parse_mode": "HTML",
+        })
 
     for i, s in enumerate(selected, 1):
         title = html.escape(s.get("title_ko", ""))
@@ -602,11 +615,22 @@ def main():
 
     log("0) 지난 피드백 수거")
     log(f"  · 수신자 {len(RECIPIENTS)}명")
-    collect_feedback()
+    if COMPARE_MODE:
+        # 비교 모드는 _append_jsonl을 막는데 tg_offset은 직접 쓴다.
+        # 그대로 두면 수거는 진행되고 기록만 안 돼 👍/👎가 영구 유실된다. 수거 자체를 건너뛴다.
+        log("  · [비교 모드] 피드백 수거 건너뜀 (유실 방지)")
+    else:
+        collect_feedback()
 
     sent_links, recent_titles = load_sent_history()
     covered_terms = load_covered_terms()
     log(f"  · 최근 7일 발송 이력: 링크 {len(sent_links)}건 (후보에서 제외) / 소개한 용어 {len(covered_terms)}개")
+
+    if COMPARE_MODE:
+        # 오늘 이미 보낸 기사가 빠지면 후보 풀이 달라져 모델 비교가 성립하지 않는다.
+        # 비교 실행에서만 이력 제외를 끈다.
+        log(f"  · [비교 모드] 발송 이력 제외를 끈다 — 같은 후보 풀로 {MODEL} 평가")
+        sent_links = set()
 
     log("1) RSS 수집 시작")
     items = fetch_entries(exclude_links=sent_links)
@@ -627,4 +651,11 @@ if __name__ == "__main__":
     if "--poll" in sys.argv:
         poll_only()
     else:
+        # --compare : 같은 후보 풀로 다른 모델을 돌려보는 임시 실행.
+        #   · 발송 이력 제외를 끄고 (후보 풀 동일)
+        #   · digest_log / glossary_log에 기록하지 않는다 (운영 이력 무오염)
+        #   모델은 CLAUDE_MODEL 환경변수로 넘긴다.
+        if "--compare" in sys.argv:
+            COMPARE_MODE = True
+            log(f"=== 모델 비교 실행: {MODEL} (기록 안 함) ===")
         main()
