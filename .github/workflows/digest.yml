@@ -36,6 +36,10 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TELEGRAM_EXTRA_CHAT_IDS: ${{ secrets.TELEGRAM_EXTRA_CHAT_IDS }}
+          # 이 프로젝트 전용 키. SCPAD·edu와 키를 공유하면 여기서 크레딧을 다 쓸 때
+          # 제품 AI 기능(명함 OCR·메시지 생성)까지 같이 멈춘다 (2026-09-17 실제 발생).
+          # DIGEST_ANTHROPIC_API_KEY 시크릿을 등록하면 그 키만 쓰고, 없으면 아래 공용 키로 폴백.
+          DIGEST_ANTHROPIC_API_KEY: ${{ secrets.DIGEST_ANTHROPIC_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           CLAUDE_MODEL: claude-sonnet-5
         run: python digest.py

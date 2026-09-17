@@ -42,7 +42,10 @@ _EXTRA_CHAT_IDS = os.getenv("TELEGRAM_EXTRA_CHAT_IDS", "")
 RECIPIENTS = list(dict.fromkeys(
     c.strip() for c in ([CHAT_ID] + _EXTRA_CHAT_IDS.split(",")) if c and c.strip()
 ))
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
+# 전용 키 우선 — 이 취미 프로젝트가 크레딧을 다 쓰면 SCPAD·edu의 AI 기능까지 같이 죽는다.
+# (2026-09-17 실제로 발생: 잔액 0 → 400 invalid_request_error → 다이제스트·제품 AI 동시 중단)
+# DIGEST_ANTHROPIC_API_KEY 가 설정되면 그 키만 쓰고, 없으면 기존 공용 키로 폴백한다.
+ANTHROPIC_API_KEY = os.getenv("DIGEST_ANTHROPIC_API_KEY") or os.getenv("ANTHROPIC_API_KEY")
 MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-5")
 
 API = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}"
@@ -307,9 +310,27 @@ def _recent_block(recent_titles):
 
 # ---------------------------------------------------------------- 2) 랭킹·요약
 def rank_and_summarize(items, recent_titles=None, covered_terms=None):
-    """Claude에게 후보를 주고 top N 기사 + 오늘의 용어 2개를 받는다."""
+    """Claude에게 후보를 주고 top N 기사 + 오늘의 용어를 받는다."""
     if not items:
         return [], []
+
+    # 입력 토큰 상한 — 피드가 터진 날 후보 수백 건이 그대로 프롬프트에 들어가는 걸 막는다.
+    # 주의: fetch_entries는 피드 순서대로 쌓으므로 그냥 앞에서 자르면 뒤쪽 소스가 통째로 사라진다.
+    # 소스별 라운드로빈으로 고르게 섞은 뒤 자른다.
+    cap = getattr(config, "MAX_CANDIDATES", 0)
+    if cap and len(items) > cap:
+        buckets = {}
+        for it in items:
+            buckets.setdefault(it.get("source", "?"), []).append(it)
+        mixed, order = [], list(buckets)
+        while len(mixed) < cap and any(buckets[s] for s in order):
+            for s in order:
+                if buckets[s]:
+                    mixed.append(buckets[s].pop(0))
+                    if len(mixed) >= cap:
+                        break
+        log(f"  · 후보 {len(items)}건 → {len(mixed)}건으로 제한 (소스 {len(order)}개 라운드로빈, 입력 토큰 절약)")
+        items = mixed
 
     client = Anthropic(api_key=ANTHROPIC_API_KEY)
 
@@ -386,8 +407,21 @@ glossary는 {config.GLOSSARY_COUNT}개 (새로 소개할 용어가 부족하면 
     try:
         parsed = json.loads(text)
     except Exception as ex:
-        log(f"  ! JSON 파싱 실패: {ex}")
+        # 조용히 빈 배열을 돌려주면 그날 다이제스트가 통째로 사라지고 아무도 모른다(9/7 실제 발생).
+        # 최소한 텔레그램으로 알린다. stop_reason이 max_tokens면 출력이 잘린 것.
+        stop = getattr(resp, "stop_reason", "?")
+        log(f"  ! JSON 파싱 실패: {ex} (stop_reason={stop}, text {len(text)}자)")
         log(text[:500])
+        # 빈 배열을 돌려주면 send_digest가 "새 글이 없었어요"를 보낸다 — 고장이 평온한 날로 위장된다.
+        try:
+            why = ("출력이 max_tokens에 걸려 JSON이 잘렸습니다."
+                   if stop == "max_tokens" else str(ex)[:150])
+            _broadcast({
+                "text": f"<b>⚠️ 다이제스트 생성 실패</b>\n\n응답 파싱 오류 (stop_reason={stop})\n{why}",
+                "parse_mode": "HTML",
+            })
+        except Exception:
+            pass
         return [], []
 
     # 구버전(배열) 응답도 허용
