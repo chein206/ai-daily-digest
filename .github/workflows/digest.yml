@@ -51,7 +51,9 @@ jobs:
           # DIGEST_ANTHROPIC_API_KEY 시크릿을 등록하면 그 키만 쓰고, 없으면 아래 공용 키로 폴백.
           DIGEST_ANTHROPIC_API_KEY: ${{ secrets.DIGEST_ANTHROPIC_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          CLAUDE_MODEL: ${{ inputs.model || 'claude-sonnet-5' }}
+          # 2026-09-17 sonnet-5 → haiku-4-5. 같은 후보 풀로 대조한 결과 선별·요약 품질 차이가
+          # 체감되지 않았고, 소요도 2m4s → 41s로 짧아졌다. 되돌리려면 이 값만 바꾸면 된다.
+          CLAUDE_MODEL: ${{ inputs.model || 'claude-haiku-4-5' }}
         run: python digest.py ${{ inputs.compare && '--compare' || '' }}
 
       - name: Commit feedback & digest log

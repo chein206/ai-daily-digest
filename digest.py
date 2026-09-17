@@ -46,7 +46,7 @@ RECIPIENTS = list(dict.fromkeys(
 # (2026-09-17 실제로 발생: 잔액 0 → 400 invalid_request_error → 다이제스트·제품 AI 동시 중단)
 # DIGEST_ANTHROPIC_API_KEY 가 설정되면 그 키만 쓰고, 없으면 기존 공용 키로 폴백한다.
 ANTHROPIC_API_KEY = os.getenv("DIGEST_ANTHROPIC_API_KEY") or os.getenv("ANTHROPIC_API_KEY")
-MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-5")
+MODEL = os.getenv("CLAUDE_MODEL", "claude-haiku-4-5")   # 워크플로가 CLAUDE_MODEL로 덮어쓴다
 
 API = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}"
 DATA_DIR = Path(__file__).parent / "data"
