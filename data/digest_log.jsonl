@@ -497,3 +497,9 @@
 {"digest_date": "2026-09-17", "item_index": 4, "title_ko": "Meta Muse 리뷰 — 소비자용 개인 AI 에이전트의 UX 정답", "tag": "AI 제품기획·PM", "source": "Lenny's Newsletter", "link": "https://www.lennysnewsletter.com/p/muse-review-the-personal-ai-agent"}
 {"digest_date": "2026-09-17", "item_index": 5, "title_ko": "Jev — 분류·라우팅만 하는 '시스템1 모델', 소형 프론티어 LLM보다 100배 빠르고 200배 저렴", "tag": "비용·라우팅", "source": "Latent Space", "link": "https://www.latent.space/p/ainews-jev-a-system-one-model-that"}
 {"digest_date": "2026-09-17", "item_index": 6, "title_ko": "AI 사용량을 비즈니스 가치로 연결하는 법 — OpenAI", "tag": "Eval / AI 제품기획", "source": "OpenAI", "link": "https://openai.com/index/how-to-connect-ai-usage-to-business-value"}
+{"digest_date": "2026-09-18", "item_index": 1, "title_ko": "Claude Cowork과 Chat이 하나로 통합", "tag": "Claude/Anthropic 생태계", "source": "Simon Willison", "link": "https://simonwillison.net/2026/Sep/16/one-claude/"}
+{"digest_date": "2026-09-18", "item_index": 2, "title_ko": "Claude Code 프로젝트 재출시 — 클라우드에서 다중 에이전트 관리", "tag": "Claude/Anthropic 생태계", "source": "The Verge AI", "link": "https://www.theverge.com/ai-artificial-intelligence/997134/anthropic-claude-code-projects"}
+{"digest_date": "2026-09-18", "item_index": 3, "title_ko": "Scry — MCP 접근이 가능한 500TB 인터넷 인덱스, 동시성 제어 포함", "tag": "RAG / 검색", "source": "Show HN", "link": "https://scry.io/"}
+{"digest_date": "2026-09-18", "item_index": 4, "title_ko": "Respawn — AI 에이전트를 위한 언두 버튼 (Rust, 로컬 우선, 클라우드 불필요)", "tag": "AI 코딩·바이브코딩", "source": "Show HN", "link": "https://github.com/savageAZfck/respawn"}
+{"digest_date": "2026-09-18", "item_index": 5, "title_ko": "Cactus Needle 3 — 8-29MB 자동화 모델이 DeepSeek V4 Flash와 동등한 성능", "tag": "음성·온디바이스", "source": "Show HN", "link": "https://cactuscompute.com/needle"}
+{"digest_date": "2026-09-18", "item_index": 6, "title_ko": "OpenAI 모델 정렬 불일치 보고 프레임워크와 6가지 실제 사례", "tag": "Eval / 품질 측정", "source": "OpenAI", "link": "https://openai.com/index/model-misalignment-reporting-framework"}
