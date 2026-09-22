@@ -517,3 +517,9 @@
 {"digest_date": "2026-09-21", "item_index": 2, "title_ko": "llm-keys-ui 0.1 — 모바일에서 원격 코딩 에이전트 제어하기", "tag": "AI 1인 사업·인디해커", "source": "Simon Willison", "link": "https://simonwillison.net/2026/Sep/20/llm-keys-ui/"}
 {"digest_date": "2026-09-21", "item_index": 3, "title_ko": "Snap·Discord 제품 리더에게 듣는 PM 철학 — 팀 설계부터 카리어 전략까지", "tag": "AI 제품기획·PM", "source": "Lenny's Newsletter", "link": "https://www.lennysnewsletter.com/p/90-minutes-of-unfiltered-product"}
 {"digest_date": "2026-09-21", "item_index": 4, "title_ko": "커뮤니티 지혜: 제품 출시 전 초기 유저 찾기, 인터뷰 성찰, 커리어 최적화", "tag": "AI 제품기획·PM", "source": "Lenny's Newsletter", "link": "https://www.lennysnewsletter.com/p/community-wisdom-finding-your-first"}
+{"digest_date": "2026-09-22", "item_index": 1, "title_ko": "V7 — AI 에이전트에 기관 메모리를 제공하는 방법", "tag": "에이전트", "source": "OpenAI", "link": "https://openai.com/index/v7"}
+{"digest_date": "2026-09-22", "item_index": 2, "title_ko": "Warp, 2,000개 PR을 월간으로 출시하다 — AI 팩토리 활용기", "tag": "AI 1인 사업·인디해커", "source": "Lenny's Newsletter", "link": "https://www.lennysnewsletter.com/p/how-warp-ships-2000-prs-a-month-with"}
+{"digest_date": "2026-09-22", "item_index": 3, "title_ko": "Jev: 새로운 LLM 형태, System One (결정 모델)", "tag": "비용·라우팅·멀티모달", "source": "Simon Willison", "link": "https://simonwillison.net/2026/Sep/21/jev/"}
+{"digest_date": "2026-09-22", "item_index": 4, "title_ko": "Jev 심층 인터뷰 — System One 모델을 프로덕션에 맞추기", "tag": "에이전트", "source": "Latent Space", "link": "https://www.latent.space/p/jev"}
+{"digest_date": "2026-09-22", "item_index": 5, "title_ko": "Amazon, Meta의 Muse AI 에이전트 접근 차단", "tag": "AI 제품기획·PM", "source": "The Verge AI", "link": "https://www.theverge.com/tech/998078/amazon-blocks-meta-muse-ai-agent-shopping"}
+{"digest_date": "2026-09-22", "item_index": 6, "title_ko": "OpenAI, 다음 단계 AI를 위한 글로벌 표준 구축 제안", "tag": "Eval / 품질 측정", "source": "OpenAI", "link": "https://openai.com/index/building-standards-next-phase-ai"}
