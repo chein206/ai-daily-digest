@@ -562,3 +562,9 @@
 {"digest_date": "2026-09-29", "item_index": 4, "title_ko": "Nvidia, 밀리초 단위로 악의적 에이전트를 격리하는 AI 안전 플랫폼 출시", "tag": "에이전트", "source": "The Verge AI", "link": "https://www.theverge.com/tech/1001287/nvidia-ai-safety-platform-rogue-agents"}
 {"digest_date": "2026-09-29", "item_index": 5, "title_ko": "초보자를 위한 Jev 가이드 — 사용법과 빌딩 아이디어", "tag": "AI 코딩·바이브코딩", "source": "Lenny's Newsletter", "link": "https://www.lennysnewsletter.com/p/jev-for-beginners-how-to-use-it-and"}
 {"digest_date": "2026-09-29", "item_index": 6, "title_ko": "TalkToMe — 에이전트가 당신에게 전화를 거는 오픈소스 macOS 앱", "tag": "AI 1인 사업·인디해커", "source": "Show HN", "link": "https://github.com/rohanprichard/talktome"}
+{"digest_date": "2026-09-30", "item_index": 1, "title_ko": "OpenAI, Dots 출시 — 복잡한 프로젝트를 자동으로 처리하는 항상-온 AI 어시스턴트", "tag": "에이전트", "source": "OpenAI", "link": "https://openai.com/index/introducing-dots"}
+{"digest_date": "2026-09-30", "item_index": 2, "title_ko": "Holo4: 범용 컴퓨터-사용 에이전트 개발 기술", "tag": "에이전트", "source": "Hugging Face", "link": "https://huggingface.co/blog/Hcompany/holo4"}
+{"digest_date": "2026-09-30", "item_index": 3, "title_ko": "출처 인식 MCP 에이전트 검증 — 사실뿐 아니라 출처를 확인하기", "tag": "RAG / 검색", "source": "Hugging Face", "link": "https://huggingface.co/blog/MultiverseComputingCAI/getting-the-source-right-not-just-the-fact-source"}
+{"digest_date": "2026-09-30", "item_index": 4, "title_ko": "GPT-6.1 Sol: Astra 대비 1/5 가격으로 유사한 성능 제공", "tag": "비용·라우팅·멀티모달", "source": "OpenAI", "link": "https://openai.com/index/introducing-gpt-6-1-sol"}
+{"digest_date": "2026-09-30", "item_index": 5, "title_ko": "OpenAI DevDay 2026: 주요 뉴스와 공식 발표 정리", "tag": "시장·산업 동향", "source": "The Verge AI", "link": "https://www.theverge.com/ai-artificial-intelligence/1002033/openai-dots-launch-muse-competitor"}
+{"digest_date": "2026-09-30", "item_index": 6, "title_ko": "Alter Zero – 코딩·보안·자동화용 저RAM 에이전트", "tag": "AI 1인 사업·인디해커", "source": "Show HN", "link": "https://github.com/linuztx/alter-zero"}
