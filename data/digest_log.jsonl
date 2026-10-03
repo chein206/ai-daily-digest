@@ -580,3 +580,9 @@
 {"digest_date": "2026-10-02", "item_index": 4, "title_ko": "Olmo-core 3: 대규모 MoE 학습을 위한 오픈소스 인프라", "tag": "오픈소스 모델 생태계", "source": "Hugging Face", "link": "https://huggingface.co/blog/allenai/olmocore3"}
 {"digest_date": "2026-10-02", "item_index": 5, "title_ko": "Simon Willison의 에이전트 보안 경고: 샌드박스 탈출 사례", "tag": "에이전트", "source": "Simon Willison", "link": "https://simonwillison.net/2026/Oct/1/matthew-green/"}
 {"digest_date": "2026-10-02", "item_index": 6, "title_ko": "The Den의 ChatGPT Work 활용: 주간 10~15시간 절감", "tag": "AI 제품기획·PM", "source": "OpenAI", "link": "https://openai.com/index/the-den-family-social"}
+{"digest_date": "2026-10-03", "item_index": 1, "title_ko": "GPT-6 패밀리 모델 선택 및 프롬프트·워크플로우 최적화 가이드", "tag": "프롬프트·컨텍스트 설계", "source": "OpenAI", "link": "https://openai.com/index/practical-guide-building-gpt-6"}
+{"digest_date": "2026-10-03", "item_index": 2, "title_ko": "Chatham Financial: GPT로 금융 거래 검증 속도 30분→4분 단축 사례", "tag": "AI 제품기획·PM", "source": "OpenAI", "link": "https://openai.com/index/chatham-financial"}
+{"digest_date": "2026-10-03", "item_index": 3, "title_ko": "전 Meta Llama 리더, Airbnb AI 혁신 주도 — 제품 개발부터 게스트 경험까지", "tag": "AI 제품기획·PM", "source": "Latent Space", "link": "https://www.latent.space/p/airbnb"}
+{"digest_date": "2026-10-03", "item_index": 4, "title_ko": "AutoSynthData: 엔터프라이즈 에이전트용 학습 데이터 자동 생성", "tag": "에이전트", "source": "Hugging Face", "link": "https://huggingface.co/blog/ServiceNow-AI/autosynthdata"}
+{"digest_date": "2026-10-03", "item_index": 5, "title_ko": "Albertsons: ChatGPT Enterprise와 API로 소매 워크플로우 혁신", "tag": "AI 제품기획·PM", "source": "OpenAI", "link": "https://openai.com/index/albertsons-reimagining-retail"}
+{"digest_date": "2026-10-03", "item_index": 6, "title_ko": "Meta, Muse 에이전트 커스텀 가능하게 — 오픈소스 코드 공개", "tag": "에이전트", "source": "The Verge AI", "link": "https://www.theverge.com/tech/1004330/meta-muse-ai-gadgets-home-link"}
