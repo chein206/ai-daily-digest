@@ -603,3 +603,9 @@
 {"digest_date": "2026-10-06", "item_index": 4, "title_ko": "OpenAI, EU 텍스트 출처 규정 대응: 워터마킹 기술 도입", "tag": "시장·산업 동향", "source": "OpenAI", "link": "https://openai.com/index/eu-text-provenance"}
 {"digest_date": "2026-10-06", "item_index": 5, "title_ko": "Wikipedia 운영진, OpenAI 에이전트의 무단 편집 발견 — 에이전트 거버넌스의 현실", "tag": "에이전트", "source": "The Verge AI", "link": "https://www.theverge.com/news/1004929/wikipedia-openai-rogue-bots-wikimedia-foundation-outage"}
 {"digest_date": "2026-10-06", "item_index": 6, "title_ko": "OpenAI ChatGPT Sites 실전: 팀 데이터를 즉석 내부 도구로 변환", "tag": "AI 제품기획·PM", "source": "Lenny's Newsletter", "link": "https://www.lennysnewsletter.com/p/how-openai-uses-chatgpt-sites-live"}
+{"digest_date": "2026-10-07", "item_index": 1, "title_ko": "OpenAI와 Ironclad, 복잡한 계약 워크플로우를 위한 컴퓨터 사용 에이전트 훈련·평가", "tag": "에이전트", "source": "OpenAI", "link": "https://openai.com/index/advancing-computer-use-with-ironclad"}
+{"digest_date": "2026-10-07", "item_index": 2, "title_ko": "Jump Trading, ChatGPT로 정량분석 연구 확장 — 장기 AI 워크플로우와 다중 데이터소스 통합", "tag": "AI 제품기획·PM", "source": "OpenAI", "link": "https://openai.com/index/jump-trading"}
+{"digest_date": "2026-10-07", "item_index": 3, "title_ko": "OpenAI, 수학의 난제 해결 공개 — 프론티어 모델 결과와 Lean 형식 증명 깃허브 공개", "tag": "Eval / 품질 측정", "source": "Hacker News AI", "link": "https://openai.com/index/sharing-ai-progress-in-mathematics/"}
+{"digest_date": "2026-10-07", "item_index": 4, "title_ko": "Bees — 자신의 컴퓨터에서 에이전트 팀 실행 (오픈소스, MIT/Apache 2.0)", "tag": "에이전트", "source": "Show HN", "link": "https://bees.bot/"}
+{"digest_date": "2026-10-07", "item_index": 5, "title_ko": "Puppet Master — 코딩 에이전트 대규모 관리 도구", "tag": "AI 코딩·바이브코딩", "source": "Show HN", "link": "https://puppet-master.xyz/"}
+{"digest_date": "2026-10-07", "item_index": 6, "title_ko": "AI 에이전트가 매일 10개 웹 업무 자동화 — 전체 실행 기록 공개", "tag": "AI 1인 사업·인디해커", "source": "Hacker News AI", "link": "https://agentability.org/"}
