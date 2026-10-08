@@ -609,3 +609,9 @@
 {"digest_date": "2026-10-07", "item_index": 4, "title_ko": "Bees — 자신의 컴퓨터에서 에이전트 팀 실행 (오픈소스, MIT/Apache 2.0)", "tag": "에이전트", "source": "Show HN", "link": "https://bees.bot/"}
 {"digest_date": "2026-10-07", "item_index": 5, "title_ko": "Puppet Master — 코딩 에이전트 대규모 관리 도구", "tag": "AI 코딩·바이브코딩", "source": "Show HN", "link": "https://puppet-master.xyz/"}
 {"digest_date": "2026-10-07", "item_index": 6, "title_ko": "AI 에이전트가 매일 10개 웹 업무 자동화 — 전체 실행 기록 공개", "tag": "AI 1인 사업·인디해커", "source": "Hacker News AI", "link": "https://agentability.org/"}
+{"digest_date": "2026-10-08", "item_index": 1, "title_ko": "Claude Haiku 5.5 출시 — 10배 저렴해진 초고속 모델", "tag": "Claude/Anthropic 생태계", "source": "Simon Willison", "link": "https://simonwillison.net/2026/Oct/7/claude-haiku-5-5/"}
+{"digest_date": "2026-10-08", "item_index": 2, "title_ko": "Atlassian × OpenAI 확대 파트너십 — 엔터프라이즈 지식을 행동으로", "tag": "에이전트", "source": "OpenAI", "link": "https://openai.com/index/atlassian-partnership"}
+{"digest_date": "2026-10-08", "item_index": 3, "title_ko": "OpenAI Decisions API 플러그인 자동 생성 — GPT-6으로 타입 안전 구현기", "tag": "구현기·튜토리얼", "source": "Simon Willison", "link": "https://simonwillison.net/2026/Oct/6/llm-openai-decisions/"}
+{"digest_date": "2026-10-08", "item_index": 4, "title_ko": "클라우드 네이티브 에이전트 하네스 — Kubernetes 공동 창시자의 신작", "tag": "에이전트", "source": "Latent Space", "link": "https://www.latent.space/p/stacklok"}
+{"digest_date": "2026-10-08", "item_index": 5, "title_ko": "Chloe — TypeScript AI 에이전트 프레임워크 (Meta 현장 엔지니어 작)", "tag": "AI 제품기획·PM", "source": "Show HN", "link": "https://chloejs.org/compare"}
+{"digest_date": "2026-10-08", "item_index": 6, "title_ko": "Liquid AI의 D1 — 엣지 기기용 멀티모달 결정 모델 오픈소싱", "tag": "음성·온디바이스", "source": "Hacker News AI", "link": "https://www.liquid.ai/blog/d1-open"}
