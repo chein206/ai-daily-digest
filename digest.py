@@ -47,6 +47,10 @@ RECIPIENTS = list(dict.fromkeys(
 # DIGEST_ANTHROPIC_API_KEY 가 설정되면 그 키만 쓰고, 없으면 기존 공용 키로 폴백한다.
 ANTHROPIC_API_KEY = os.getenv("DIGEST_ANTHROPIC_API_KEY") or os.getenv("ANTHROPIC_API_KEY")
 MODEL = os.getenv("CLAUDE_MODEL", "claude-haiku-5-5")   # 워크플로가 CLAUDE_MODEL로 덮어쓴다
+# 생각(thinking) 깊이. 기사 선별·요약은 단순 작업이라 low로 충분하다 (Haiku 5.5 기본값은 medium).
+# 비교 모드에서 effort를 지원하지 않는 구형 모델(Haiku 4.5 등)을 넣으면 자동으로 빼고 보낸다.
+EFFORT = os.getenv("DIGEST_EFFORT", "low")   # CLAUDE_EFFORT는 Claude Code가 쓰는 이름이라 피함
+_NO_EFFORT_MODELS = ("claude-haiku-4-5", "claude-sonnet-4-5", "claude-3")
 
 API = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}"
 DATA_DIR = Path(__file__).parent / "data"
@@ -403,6 +407,8 @@ glossary는 {config.GLOSSARY_COUNT}개 (새로 소개할 용어가 부족하면 
         model=MODEL,
         max_tokens=12000,  # thinking 블록 + JSON 출력 여유 있게 (MAX_ITEMS 9로 늘려 상향)
         messages=[{"role": "user", "content": prompt}],
+        **({"output_config": {"effort": EFFORT}}
+           if EFFORT and not MODEL.startswith(_NO_EFFORT_MODELS) else {}),
     )
     # 응답에 thinking 블록이 섞일 수 있으니 text 블록만 골라낸다
     text = ""
