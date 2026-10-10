@@ -53,7 +53,9 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           # 2026-09-17 sonnet-5 → haiku-4-5. 같은 후보 풀로 대조한 결과 선별·요약 품질 차이가
           # 체감되지 않았고, 소요도 2m4s → 41s로 짧아졌다. 되돌리려면 이 값만 바꾸면 된다.
-          CLAUDE_MODEL: ${{ inputs.model || 'claude-haiku-4-5' }}
+          # 2026-10-10 haiku-4-5 → haiku-5-5. 단가 1/10($1/$5 → $0.10/$0.50, 프롬프트 100K 이하).
+          # 기본으로 adaptive thinking이 켜지지만 digest.py는 text 블록만 골라 읽어 영향 없음.
+          CLAUDE_MODEL: ${{ inputs.model || 'claude-haiku-5-5' }}
         run: python digest.py ${{ inputs.compare && '--compare' || '' }}
 
       - name: Commit feedback & digest log
