@@ -51,6 +51,7 @@ MODEL = os.getenv("CLAUDE_MODEL", "claude-haiku-5-5")   # 워크플로가 CLAUDE
 # 비교 모드에서 effort를 지원하지 않는 구형 모델(Haiku 4.5 등)을 넣으면 자동으로 빼고 보낸다.
 EFFORT = os.getenv("DIGEST_EFFORT", "low")   # CLAUDE_EFFORT는 Claude Code가 쓰는 이름이라 피함
 _NO_EFFORT_MODELS = ("claude-haiku-4-5", "claude-sonnet-4-5", "claude-3")
+SENT_EFFORT = EFFORT if EFFORT and not MODEL.startswith(_NO_EFFORT_MODELS) else None
 
 API = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}"
 DATA_DIR = Path(__file__).parent / "data"
@@ -79,6 +80,31 @@ def _append_jsonl(path, obj):
     DATA_DIR.mkdir(exist_ok=True)
     with open(path, "a", encoding="utf-8") as f:
         f.write(json.dumps(obj, ensure_ascii=False) + "\n")
+
+
+def _log_usage(resp):
+    """랭킹 호출의 토큰 사용량을 data/usage_log.jsonl에 남긴다.
+    effort·모델별 실제 비용을 추정 말고 실측으로 계산하기 위한 것.
+    비교 실행도 남긴다 — 후보 풀·중복 제외에 영향이 없고 모델 비교엔 오히려 필요하다.
+    (output_tokens에는 생각(thinking) 토큰이 포함된다)"""
+    u = getattr(resp, "usage", None)
+    if u is None:
+        return
+    row = {
+        "ts": dt.datetime.now().isoformat(timespec="seconds"),
+        "model": MODEL,
+        "effort": SENT_EFFORT,
+        "input_tokens": getattr(u, "input_tokens", 0) or 0,
+        "output_tokens": getattr(u, "output_tokens", 0) or 0,
+        "cache_read_input_tokens": getattr(u, "cache_read_input_tokens", 0) or 0,
+        "stop_reason": getattr(resp, "stop_reason", None),
+        "compare": COMPARE_MODE,
+    }
+    log(f"  · 토큰: 입력 {row['input_tokens']:,} / 출력 {row['output_tokens']:,} "
+        f"(model={MODEL}, effort={SENT_EFFORT or '없음'}, stop={row['stop_reason']})")
+    DATA_DIR.mkdir(exist_ok=True)
+    with open(DATA_DIR / "usage_log.jsonl", "a", encoding="utf-8") as f:
+        f.write(json.dumps(row, ensure_ascii=False) + "\n")
 
 
 # ---------------------------------------------------------------- 0) 피드백 수거
@@ -407,9 +433,9 @@ glossary는 {config.GLOSSARY_COUNT}개 (새로 소개할 용어가 부족하면 
         model=MODEL,
         max_tokens=12000,  # thinking 블록 + JSON 출력 여유 있게 (MAX_ITEMS 9로 늘려 상향)
         messages=[{"role": "user", "content": prompt}],
-        **({"output_config": {"effort": EFFORT}}
-           if EFFORT and not MODEL.startswith(_NO_EFFORT_MODELS) else {}),
+        **({"output_config": {"effort": SENT_EFFORT}} if SENT_EFFORT else {}),
     )
+    _log_usage(resp)   # 파싱 전에 기록 — 실패한 호출도 토큰은 썼다
     # 응답에 thinking 블록이 섞일 수 있으니 text 블록만 골라낸다
     text = ""
     for block in resp.content:

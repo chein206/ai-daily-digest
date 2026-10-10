@@ -85,6 +85,7 @@ GitHub Actions (매일 07:47 KST)
 | `data/digest_log.jsonl` | 발송 내역 |
 | `data/feedback.jsonl` | 👍/👎 수거 결과 |
 | `data/glossary_log.jsonl` | 설명한 용어 이력 |
+| `data/usage_log.jsonl` | 랭킹 호출 토큰 사용량 (모델·effort별 실측 비용 계산용, 비교 실행은 `compare: true`) |
 
 관심사는 `config.py`에서 세 단계로 나눈다.
 
