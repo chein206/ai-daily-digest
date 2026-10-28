@@ -85,7 +85,8 @@ GitHub Actions (매일 07:47 KST)
 | `data/digest_log.jsonl` | 발송 내역 |
 | `data/feedback.jsonl` | 👍/👎 수거 결과 |
 | `data/glossary_log.jsonl` | 설명한 용어 이력 |
-| `data/usage_log.jsonl` | 랭킹 호출 토큰 사용량 (모델·effort별 실측 비용 계산용, 비교 실행은 `compare: true`) |
+| `data/usage_log.jsonl` | 랭킹 호출 토큰 사용량 (모델·effort별 실측 비용 계산용, 비교 실행은 `compare: true`, `job`으로 매일/주간 구분) |
+| `data/trending_log.jsonl` | 주간 GitHub 트렌딩 발송 이력 (최근 2주 재등장 🔁 판정용) |
 
 관심사는 `config.py`에서 세 단계로 나눈다.
 
@@ -136,6 +137,17 @@ TELEGRAM_EXTRA_CHAT_IDS=123456789,987654321
 - **피드백은 사람별로 구분되되 익명이다.** 저장소가 public이라 원본 텔레그램 id 대신
   봇 토큰을 소금으로 쓴 해시(`user`)를 남긴다. 같은 사람은 같은 키, 역추적은 불가.
   `is_owner: true`인 피드백만 내 선별 기준으로 쓰면 지인 취향이 랭킹을 흔들지 않는다.
+
+## 주간 GitHub 트렌딩 (`trending.py`)
+
+매주 월요일 09:17 KST(`trending.yml`)에 GitHub에서 이번 주 스타를 가장 많이 받은 저장소 TOP 10을 보낸다.
+
+- **수집**: `github.com/trending?since=weekly`를 긁는다 (공식 API 없음). 페이지 순서는 GitHub 자체 알고리즘이라
+  "이번 주 받은 스타"와 순위가 어긋나서, 독자가 숫자로 납득하게 **이번 주 스타 순으로 다시 정렬**한다.
+- **대체 경로**: 페이지 구조가 바뀌어 5개 미만이면 검색 API로 "최근 7일 안에 생긴 저장소"를 스타 순으로.
+  (이 경로엔 스타를 사서 띄운 저장소가 섞이기 쉬워 제목을 "새로 뜬 저장소"로 바꿔 구분한다)
+- **요약**: README 앞 1,200자 + 설명으로 Claude가 한글 한 줄 + 분류. 요약이 실패해도 영어 설명으로 목록은 보낸다.
+- **🔁**: 최근 2주 안에 이미 소개한 저장소. 빼지 않고 표시만 한다 (계속 뜨는 것도 트렌드라서).
 
 ## 로드맵
 

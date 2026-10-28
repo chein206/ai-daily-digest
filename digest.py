@@ -82,7 +82,7 @@ def _append_jsonl(path, obj):
         f.write(json.dumps(obj, ensure_ascii=False) + "\n")
 
 
-def _log_usage(resp):
+def _log_usage(resp, job="digest"):
     """랭킹 호출의 토큰 사용량을 data/usage_log.jsonl에 남긴다.
     effort·모델별 실제 비용을 추정 말고 실측으로 계산하기 위한 것.
     비교 실행도 남긴다 — 후보 풀·중복 제외에 영향이 없고 모델 비교엔 오히려 필요하다.
@@ -92,6 +92,7 @@ def _log_usage(resp):
         return
     row = {
         "ts": dt.datetime.now().isoformat(timespec="seconds"),
+        "job": job,                 # digest(매일) | trending(주간)
         "model": MODEL,
         "effort": SENT_EFFORT,
         "input_tokens": getattr(u, "input_tokens", 0) or 0,
