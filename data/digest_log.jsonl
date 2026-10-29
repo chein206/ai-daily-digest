@@ -732,3 +732,9 @@
 {"digest_date": "2026-10-28", "item_index": 4, "title_ko": "CodeRabbit, GPT-6.1 Sol로 복잡한 코드베이스의 보안 취약점 점검", "tag": "AI 코딩·바이브코딩", "source": "OpenAI", "link": "https://openai.com/index/gpt-6-1-sol-coderabbit-code-security"}
 {"digest_date": "2026-10-28", "item_index": 5, "title_ko": "LLM이 연구 아이디어의 참신성을 판단할 수 있을까?", "tag": "Eval / 품질 측정", "source": "Hugging Face", "link": "https://huggingface.co/blog/allenai/novelty-bench"}
 {"digest_date": "2026-10-28", "item_index": 6, "title_ko": "구글 Genie 4: 더 사실적인 실시간 인터랙티브 월드 생성", "tag": "이미지·영상 생성", "source": "The Verge AI", "link": "https://www.theverge.com/tech/1019076/google-genie-4-ai-model"}
+{"digest_date": "2026-10-29", "item_index": 1, "title_ko": "구글 Gemini 4 Carbon 공개: 차세대 프론티어 모델", "tag": "추론 모델·학습", "source": "Google DeepMind", "link": "https://deepmind.google/blog/gemini-4-carbon-our-next-frontier-model/"}
+{"digest_date": "2026-10-29", "item_index": 2, "title_ko": "바이브 게임 개발의 10월 변곡점", "tag": "AI 코딩·바이브코딩", "source": "Simon Willison", "link": "https://simonwillison.net/2026/Oct/28/vibe-game-development/"}
+{"digest_date": "2026-10-29", "item_index": 3, "title_ko": "GitHub Octoverse 2026: 에이전틱 엔지니어링이 바꾼 개발 지표", "tag": "시장·산업 동향", "source": "Simon Willison", "link": "https://simonwillison.net/2026/Oct/28/github-octoverse-2026/"}
+{"digest_date": "2026-10-29", "item_index": 4, "title_ko": "에이전트는 왜 Supabase를 좋아할까", "tag": "에이전트", "source": "Latent Space", "link": "https://latent.space/p/supabase/"}
+{"digest_date": "2026-10-29", "item_index": 5, "title_ko": "Grok Bot, Dot, Muse, Claude Duet 9개 실제 과제 비교", "tag": "Eval / 품질 측정", "source": "Lenny's Newsletter", "link": "https://www.lennysnewsletter.com/p/grok-vs-dot-vs-muse-vs-claude-duet"}
+{"digest_date": "2026-10-29", "item_index": 6, "title_ko": "NVIDIA Nemotron 3.5 Transcribe와 Granary v2: 프롬프트로 조정 가능한 다국어 전사", "tag": "음성·온디바이스", "source": "Hugging Face", "link": "https://huggingface.co/blog/nvidia/nemotron-transcribe-granary"}
