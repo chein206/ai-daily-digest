@@ -36,6 +36,7 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TELEGRAM_EXTRA_CHAT_IDS: ${{ secrets.TELEGRAM_EXTRA_CHAT_IDS }}
+          STASH_CRON_SECRET: ${{ secrets.STASH_CRON_SECRET }}   # 👍 → 창고봇
         run: python digest.py --poll
 
       - name: Commit state

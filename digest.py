@@ -109,6 +109,43 @@ def _log_usage(resp, job="digest"):
 
 
 # ---------------------------------------------------------------- 0) 피드백 수거
+# 본인이 👍 한 기사는 개인 자료 창고(@sta26bot)에도 넣는다. 비밀값 없으면 건너뜀.
+STASH_HOOK = os.getenv("STASH_HOOK_URL",
+                       "https://mywqptmbwdxzolwfebdf.supabase.co/functions/v1/stash-bot?hook=era")
+STASH_SECRET = os.getenv("STASH_CRON_SECRET")
+
+
+def _send_to_stash(date, idx):
+    """digest_log 에서 그 기사를 찾아 창고로 보낸다. 실패해도 피드백 수거는 계속."""
+    if not STASH_SECRET or COMPARE_MODE:
+        return
+    path = DATA_DIR / "digest_log.jsonl"
+    row = None
+    if path.exists():
+        for line in path.read_text(encoding="utf-8").splitlines():
+            try:
+                o = json.loads(line)
+            except ValueError:
+                continue
+            if o.get("digest_date") == date and str(o.get("item_index")) == str(idx):
+                row = o   # 같은 날·번호가 여럿이면 마지막 것
+    if not row or not row.get("link"):
+        log(f"  ! 창고: {date} #{idx} 발송 기록 없음")
+        return
+    try:
+        r = requests.post(STASH_HOOK, headers={"x-cron-secret": STASH_SECRET}, timeout=90, json={
+            "link": row["link"], "title": row.get("title_ko", ""), "source": row.get("source", ""),
+            "tag": row.get("tag", ""), "digest_date": date,
+        })
+        j = r.json() if r.headers.get("content-type", "").startswith("application/json") else {}
+        if r.ok:
+            log(f"  · 창고: {date} #{idx} → " + (f"이미 있음 #{j.get('dup')}" if j.get("dup") else f"#{j.get('id')} 저장"))
+        else:
+            log(f"  ! 창고 저장 실패 HTTP {r.status_code}")
+    except Exception as ex:
+        log(f"  ! 창고 저장 실패: {ex}")
+
+
 def collect_feedback():
     """지난 발송 이후 눌린 👍/👎 콜백을 수거해 feedback.jsonl에 기록한다."""
     offset_file = DATA_DIR / "tg_offset.json"
@@ -152,6 +189,8 @@ def collect_feedback():
             "is_owner": str(uid) == str(CHAT_ID),   # 랭킹 기준으로 쓸 피드백은 본인 것만
         })
         collected += 1
+        if verdict == "up" and str(uid) == str(CHAT_ID):
+            _send_to_stash(date, idx)
         # 버튼 누른 사람에게 즉시 토스트 응답
         try:
             requests.post(f"{API}/answerCallbackQuery", json={
