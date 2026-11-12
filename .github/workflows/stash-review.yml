@@ -1,25 +1,37 @@
 name: Stash Weekly Review
 
-# 창고봇(@sta26bot) 주간 창고 리뷰 — 월요일 아침 텔레그램으로.
+# 창고봇(@sta26bot) 예약 신호 — 월요일 주간 리뷰 · 매달 1일 글감 초안.
 # 실제 일은 Supabase 함수 stash-bot 이 한다 (이 워크플로는 「지금 보내」 신호만).
 # GitHub 예약은 몇 시간씩 밀릴 수 있음 — 사장님이 그 정도는 괜찮다고 함 (2026-11-12).
 # 코드: cld/stash (비공개 cld-hub)
 on:
   schedule:
-    - cron: "7 0 * * 1"   # 월요일 09:07 KST. 주간 트렌딩(09:17)과 조금 비켜서
-  workflow_dispatch: {}
+    - cron: "7 0 * * 1"   # 월요일 09:07 KST 주간 리뷰. 주간 트렌딩(09:17)과 조금 비켜서
+    - cron: "27 0 1 * *"  # 매달 1일 09:27 KST 글감 초안
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "weekly = 주간 리뷰 · monthly = 글감"
+        default: weekly
+        type: choice
+        options: [weekly, monthly]
 
 jobs:
   review:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Ask stash-bot to send the weekly review
+      - name: Ask stash-bot to send it
         env:
           STASH_CRON_SECRET: ${{ secrets.STASH_CRON_SECRET }}
+          SCHEDULE: ${{ github.event.schedule }}
+          INPUT_MODE: ${{ inputs.mode }}
         run: |
+          mode="${INPUT_MODE:-weekly}"
+          [ "$SCHEDULE" = "27 0 1 * *" ] && mode=monthly
+          echo "mode=$mode"
           code=$(curl -sS -o resp.json -w '%{http_code}' --max-time 150 \
-            -X POST 'https://mywqptmbwdxzolwfebdf.supabase.co/functions/v1/stash-bot?cron=weekly' \
+            -X POST "https://mywqptmbwdxzolwfebdf.supabase.co/functions/v1/stash-bot?cron=${mode}" \
             -H 'content-type: application/json' \
             -H "x-cron-secret: ${STASH_CRON_SECRET}" \
             -d '{}')
