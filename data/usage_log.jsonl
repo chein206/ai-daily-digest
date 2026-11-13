@@ -34,3 +34,4 @@
 {"ts": "2026-11-10T04:21:21", "job": "digest", "model": "claude-haiku-5-5", "effort": "low", "input_tokens": 17937, "output_tokens": 4944, "cache_read_input_tokens": 0, "stop_reason": "end_turn", "compare": false}
 {"ts": "2026-11-11T02:17:00", "job": "digest", "model": "claude-haiku-5-5", "effort": "low", "input_tokens": 17805, "output_tokens": 6031, "cache_read_input_tokens": 0, "stop_reason": "end_turn", "compare": false}
 {"ts": "2026-11-12T03:24:24", "job": "digest", "model": "claude-haiku-5-5", "effort": "low", "input_tokens": 16051, "output_tokens": 4351, "cache_read_input_tokens": 0, "stop_reason": "end_turn", "compare": false}
+{"ts": "2026-11-13T02:57:13", "job": "digest", "model": "claude-haiku-5-5", "effort": "low", "input_tokens": 15933, "output_tokens": 4775, "cache_read_input_tokens": 0, "stop_reason": "end_turn", "compare": false}
