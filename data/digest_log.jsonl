@@ -884,3 +884,9 @@
 {"digest_date": "2026-11-23", "item_index": 3, "title_ko": "OpenAI, 'Perplexity'로 AI 모델의 발전을 측정하는 방법", "tag": "Eval / 품질 측정", "source": "OpenAI", "link": "https://openai.com/index/perplexity-and-intelligence"}
 {"digest_date": "2026-11-23", "item_index": 4, "title_ko": "Binding of Isaac, 리패닌스 플러스에서 AI 음악 제거", "tag": "시장·산업 동향", "source": "The Verge AI", "link": "https://www.theverge.com/games/1039770/binding-of-isaac-ai-music"}
 {"digest_date": "2026-11-23", "item_index": 5, "title_ko": "Claude로 만든 HTML select 스타일 샘플 페이지", "tag": "구현기·튜토리얼", "source": "Simon Willison", "link": "https://simonwillison.net/2026/Nov/22/select-styling/"}
+{"digest_date": "2026-11-24", "item_index": 1, "title_ko": "에이전틱 평가를 구축하고 유지보수하는 방법", "tag": "Eval / 품질 측정", "source": "Hugging Face", "link": "https://huggingface.co/blog/agentic-evals"}
+{"digest_date": "2026-11-24", "item_index": 2, "title_ko": "Claude, 풀 리퀘스트를 리뷰하고 스스로 수정·승인까지 한다", "tag": "Claude/Anthropic 생태계", "source": "The Verge AI", "link": "https://www.theverge.com/ai-artificial-intelligence/1040134/anthropic-claude-ship-ai-pull-requests"}
+{"digest_date": "2026-11-24", "item_index": 3, "title_ko": "Richpanel, 30일 만에 고객지원 50% 자동화", "tag": "시장·산업 동향", "source": "OpenAI", "link": "https://openai.com/business/customer-stories/richpanel-ai-customer-support"}
+{"digest_date": "2026-11-24", "item_index": 4, "title_ko": "임원용 OpenClaw: 1%의 불편함까지 자동화하기", "tag": "AI 1인 사업·인디해커", "source": "Lenny's Newsletter", "link": "https://www.lennysnewsletter.com/p/openclaw-for-executives-automate"}
+{"digest_date": "2026-11-24", "item_index": 5, "title_ko": "Genesis Map: 에이전트가 바꾼 코드를 한눈에, 어디서 깨질지 확인", "tag": "AI 코딩·바이브코딩", "source": "Show HN", "link": "https://github.com/GenesisAgentInfra/genesis"}
+{"digest_date": "2026-11-24", "item_index": 6, "title_ko": "FireVoice: 내 GPU에서 돌리는 무료 오픈소스 음성 스튜디오", "tag": "음성·온디바이스", "source": "Show HN", "link": "https://firevoice.fabwaseem.com"}

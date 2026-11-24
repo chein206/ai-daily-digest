@@ -47,3 +47,4 @@
 {"ts": "2026-11-22T02:41:49", "job": "digest", "model": "claude-haiku-5-5", "effort": "low", "input_tokens": 14883, "output_tokens": 4063, "cache_read_input_tokens": 0, "stop_reason": "end_turn", "compare": false}
 {"ts": "2026-11-23T03:10:19", "job": "digest", "model": "claude-haiku-5-5", "effort": "low", "input_tokens": 14500, "output_tokens": 4322, "cache_read_input_tokens": 0, "stop_reason": "end_turn", "compare": false}
 {"ts": "2026-11-23T07:42:34", "job": "trending", "model": "claude-haiku-5-5", "effort": "low", "input_tokens": 5714, "output_tokens": 865, "cache_read_input_tokens": 0, "stop_reason": "end_turn", "compare": false}
+{"ts": "2026-11-24T06:27:17", "job": "digest", "model": "claude-haiku-5-5", "effort": "low", "input_tokens": 17261, "output_tokens": 3795, "cache_read_input_tokens": 0, "stop_reason": "end_turn", "compare": false}
