@@ -890,3 +890,9 @@
 {"digest_date": "2026-11-24", "item_index": 4, "title_ko": "임원용 OpenClaw: 1%의 불편함까지 자동화하기", "tag": "AI 1인 사업·인디해커", "source": "Lenny's Newsletter", "link": "https://www.lennysnewsletter.com/p/openclaw-for-executives-automate"}
 {"digest_date": "2026-11-24", "item_index": 5, "title_ko": "Genesis Map: 에이전트가 바꾼 코드를 한눈에, 어디서 깨질지 확인", "tag": "AI 코딩·바이브코딩", "source": "Show HN", "link": "https://github.com/GenesisAgentInfra/genesis"}
 {"digest_date": "2026-11-24", "item_index": 6, "title_ko": "FireVoice: 내 GPU에서 돌리는 무료 오픈소스 음성 스튜디오", "tag": "음성·온디바이스", "source": "Show HN", "link": "https://firevoice.fabwaseem.com"}
+{"digest_date": "2026-11-25", "item_index": 1, "title_ko": "12개월 동안 LLM의 세 가지 변곡점: 코딩 에이전트는 어떻게 바뀌었나", "tag": "에이전트", "source": "Simon Willison", "link": "https://simonwillison.net/2026/Nov/24/llm-inflection-points/"}
+{"digest_date": "2026-11-25", "item_index": 2, "title_ko": "GLM-5.4: 첫 루프 트랜스포머로 범용 코딩 능력 겨냥", "tag": "오픈소스 모델 생태계", "source": "Simon Willison", "link": "https://simonwillison.net/2026/Nov/23/glm-54/"}
+{"digest_date": "2026-11-25", "item_index": 3, "title_ko": "iFood, 15,000개 저장소에 코딩 에이전트를 확장한 방법", "tag": "AI 코딩·바이브코딩", "source": "OpenAI", "link": "https://openai.com/business/customer-stories/ifood"}
+{"digest_date": "2026-11-25", "item_index": 4, "title_ko": "Clay, Codex와 ChatGPT로 영업팀의 딜 수주를 돕다", "tag": "시장·산업 동향", "source": "OpenAI", "link": "https://openai.com/business/customer-stories/clay-plugins-openai"}
+{"digest_date": "2026-11-25", "item_index": 5, "title_ko": "뉴욕타임스, 프리랜서 사진작가에게 Photoshop 2027 업데이트 보류 요청", "tag": "이미지·영상 생성", "source": "The Verge AI", "link": "https://www.theverge.com/ai-artificial-intelligence/1041227/the-new-york-times-warns-photographers-not-to-update-photoshop-over-ai-features"}
+{"digest_date": "2026-11-25", "item_index": 6, "title_ko": "Tidal, 다음 달부터 AI 생성 음악 전면 금지", "tag": "시장·산업 동향", "source": "The Verge AI", "link": "https://www.theverge.com/entertainment/1041362/tidal-ai-music-ban"}
