@@ -51,3 +51,4 @@
 {"ts": "2026-11-25T05:03:42", "job": "digest", "model": "claude-haiku-5-5", "effort": "low", "input_tokens": 16359, "output_tokens": 4979, "cache_read_input_tokens": 0, "stop_reason": "end_turn", "compare": false}
 {"ts": "2026-11-26T04:28:08", "job": "digest", "model": "claude-haiku-5-5", "effort": "low", "input_tokens": 16748, "output_tokens": 5232, "cache_read_input_tokens": 0, "stop_reason": "end_turn", "compare": false}
 {"ts": "2026-11-27T04:35:00", "job": "digest", "model": "claude-haiku-5-5", "effort": "low", "input_tokens": 17414, "output_tokens": 4940, "cache_read_input_tokens": 0, "stop_reason": "end_turn", "compare": false}
+{"ts": "2026-11-28T04:17:38", "job": "digest", "model": "claude-haiku-5-5", "effort": "low", "input_tokens": 14714, "output_tokens": 3982, "cache_read_input_tokens": 0, "stop_reason": "end_turn", "compare": false}

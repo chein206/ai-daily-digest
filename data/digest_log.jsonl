@@ -908,3 +908,9 @@
 {"digest_date": "2026-11-27", "item_index": 4, "title_ko": "AI로 외부 의존성 없는 Rust로 Stockfish 18을 이기다", "tag": "AI 코딩·바이브코딩", "source": "Hacker News AI", "link": "https://github.com/deedy/chess-chatarunga/blob/main/docs/paper.pdf"}
 {"digest_date": "2026-11-27", "item_index": 5, "title_ko": "EarthCiv: Claude Code로 만든 국가별 문명 지도 모음", "tag": "AI 코딩·바이브코딩", "source": "Show HN", "link": "https://earthciv.org"}
 {"digest_date": "2026-11-27", "item_index": 6, "title_ko": "Nothing, AI 이어버드와 충전 케이스의 상세 모습 공개", "tag": "음성·온디바이스", "source": "The Verge AI", "link": "https://www.theverge.com/gadgets/1042162/nothing-ear-note-ai-earbuds-reveal"}
+{"digest_date": "2026-11-28", "item_index": 1, "title_ko": "Clay는 어떻게 GTM 에이전트를 만드는가: 모든 에이전트를 위한 영업·마케팅 인프라", "tag": "에이전트", "source": "Latent Space", "link": "https://latent.space/p/how-clay-builds-gtm-agents-jeff-barg-head-of-ai/"}
+{"digest_date": "2026-11-28", "item_index": 2, "title_ko": "안드로이드 DIY 위젯, 바이브 코딩으로 만드는 재미", "tag": "AI 코딩·바이브코딩", "source": "The Verge AI", "link": "https://www.theverge.com/tech/1041801/android-intelligence-create-my-widget-gemini"}
+{"digest_date": "2026-11-28", "item_index": 3, "title_ko": "AMD Ryzen·Radeon용 llama.cpp 벤치마크 대시보드 공개", "tag": "오픈소스 모델 생태계", "source": "Hugging Face", "link": "https://huggingface.co/blog/ggml-org/llamacpp-amd-bench"}
+{"digest_date": "2026-11-28", "item_index": 4, "title_ko": "Trainium3로 LTX-2.5 영상 생성하기", "tag": "이미지·영상 생성", "source": "Hugging Face", "link": "https://huggingface.co/blog/video-trainium3"}
+{"digest_date": "2026-11-28", "item_index": 5, "title_ko": "AI 학습 데이터 시장의 내부: 독점 데이터와 파일럿 주문", "tag": "시장·산업 동향", "source": "Latent Space", "link": "https://latent.space/p/inside_the_ai_training_data_market_gabe_greenberg_g2i/"}
+{"digest_date": "2026-11-28", "item_index": 6, "title_ko": "datasette-charts 0.4a0: Claude로 만든 실험용 플러그인 훅", "tag": "구현기·튜토리얼", "source": "Simon Willison", "link": "https://simonwillison.net/2026/Nov/27/datasette-charts/"}
